@@ -1,0 +1,12 @@
+.info-panel {
+  position: fixed;
+  bottom: 0;
+}
+
+.info-panel__occupation-button {
+  cursor: pointer;
+}
+
+.info-panel__occupation-button_highlighted {
+  box-shadow: 0 0 3px red;
+}

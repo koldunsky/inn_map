@@ -1,0 +1,37 @@
+.employee {
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 50px;
+  width: 5px;
+  height: 5px;
+}
+
+.info {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  transform: translateY(-100%);
+  background: white;
+  border: 1px solid grey;
+  padding: 10px;
+  text-align: left;
+
+  .employee:hover & {
+    display: block;
+    top: 0;
+  }
+}
+@keyframes highlite {
+  0% {
+    box-shadow: 0 0 3px red;
+  }
+  50% {
+    box-shadow: 0 0 0 3px red;
+  }
+}
+
+.employee__highlight {
+  animation: highlite 1s linear infinite;
+  border-color: red;
+}

@@ -1,0 +1,30 @@
+.floor {
+  position: relative;
+  color: green;
+  //margin-top: 1500px;
+  //background-image: url(./bg.png);
+  //background-position: center;
+  //-webkit-background-size: cover;
+  //background-size: cover;
+  //min-height: 800px;
+}
+
+.tile {
+  position: absolute;
+  font-size: .8rem;
+  color: rgba(blue, .2);
+  &:hover {
+    color: inherit;
+    border: 1px solid red;
+  }
+  &::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 1px;
+    background: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

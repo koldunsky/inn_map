@@ -1,0 +1,40 @@
+<template>
+  <div
+      class="employee"
+      :class="{
+        'employee__highlight': employee.isHighlighted
+      }"
+      :style="styles"
+  >
+    <div class="info">
+      <div class="name">{{employee.name}}</div>
+      <div class="email"><a :href="`mailto:${employee.email}`">{{employee.email}}</a></div>
+      <div class="slack"><a :href="employee.slackLink">{{employee.slack}}</a></div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import _MapObjectMixin from '../_MapObjectMixin';
+
+  export default {
+    components: {},
+    props: ['employee'],
+    mounted() {
+
+    },
+    mixins: [_MapObjectMixin],
+    computed: {
+      styles() {
+        return {
+          ...this.mapPosition,
+          width: '15px',
+          height: '15px',
+          backgroundColor: this.$store.state.occupations[this.employee.occupation].color,
+        };
+      }
+    }
+  }
+</script>
+
+<style scoped lang="scss" src="./index.scss"></style>
