@@ -1,12 +1,18 @@
 .floor {
   position: relative;
   color: green;
-  //margin-top: 1500px;
-  //background-image: url(./bg.png);
-  //background-position: center;
-  //-webkit-background-size: cover;
-  //background-size: cover;
-  //min-height: 800px;
+  padding-top: 800px;
+  background-image: url(../../assets/3rd-floor.png);
+  background-position: center;
+  -webkit-background-size: contain;
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 800px;
+}
+
+.inner {
+  position: relative;
+  transform: translateY(50%);
 }
 
 .tile {

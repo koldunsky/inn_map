@@ -1,18 +1,20 @@
 <template>
   <div class="floor">
-    <Tile
-        v-for="tile in getTiles()"
-        :x="tile.y"
-        :y="tile.x"
-        :key="tile.x + '_' + tile.y"
-    />
-    <Employee
-        v-for="empl in employees"
-        :key="empl.name"
-        :x="empl.coords.x"
-        :y="empl.coords.y"
-        :employee="empl"
-    />
+    <div class="inner">
+      <Tile
+          v-for="tile in getTiles()"
+          :x="tile.y"
+          :y="tile.x"
+          :key="tile.x + '_' + tile.y"
+      />
+      <Employee
+          v-for="empl in employees"
+          :key="empl.name"
+          :x="empl.coords.x"
+          :y="empl.coords.y"
+          :employee="empl"
+      />
+    </div>
   </div>
 </template>
 
