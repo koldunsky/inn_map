@@ -7,10 +7,6 @@
       }"
   >
     <div class="background"
-         :style="{
-        width: fieldMeasure.width * fieldMeasure.step * 2 + 'rem',
-        height: fieldMeasure.height * fieldMeasure.step * 2  + 'rem',
-      }"
     ></div>
     <div class="inner">
       <Tile
@@ -21,7 +17,7 @@
       />
       <Employee
           v-for="empl in employees"
-          :key="empl.name"
+          :key="empl.name + empl.coords.x + empl.coords.y"
           :x="empl.coords.x"
           :y="empl.coords.y"
           :employee="empl"

@@ -1,17 +1,16 @@
-import {step} from '../../constants/app';
+import {step, fieldHeight, fieldWidth} from '../../constants/app';
 
 export default {
     props: ['x', 'y', 'width', 'height'],
     computed: {
       mapPosition: function() {
         const {x, y, width, height} = this;
+        const k = 1.9;
         const obj = {
           width: width ? width : step,
           height: height ? height : step,
-          // left: x * step,
-          // top: y * step,
-          left: (x * 1.76 + y) * step,
-          top: (y * .77 - x) * step,
+          left: (x * 1.76 + y) * k,
+          top: (y * .77 - x) * k + fieldWidth * step / 1.5789,
         };
 
         const finalObj = {};
