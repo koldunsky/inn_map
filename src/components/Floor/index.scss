@@ -1,34 +1,50 @@
 .floor {
   position: relative;
   color: green;
-  padding-top: 800px;
-  background-image: url(../../assets/3rd-floor.png);
-  background-position: center;
-  -webkit-background-size: contain;
-  background-repeat: no-repeat;
-  background-size: contain;
-  min-height: 800px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 10rem;
 }
 
 .inner {
   position: relative;
-  transform: translateY(50%);
+  transform: translateY(40%);
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  position: absolute;
+  left: -27rem;
+  padding-right: 68rem;
+  background-image: url(../../assets/3rd-floor.png);
+  background-position: center;
+  -webkit-background-size: contain;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
 
 .tile {
   position: absolute;
   font-size: .8rem;
   color: rgba(blue, .2);
+  border: 1px solid rgba(red, .5);
   &:hover {
     color: inherit;
     border: 1px solid red;
   }
   &::before {
     content: '';
+    border-radius: 5px;
     display: block;
-    width: 1px;
-    height: 1px;
-    background: #000;
+    width: 5px;
+    height: 5px;
+    background: red;
+    animation: pulse 1s infinite;
     position: absolute;
     top: 0;
     left: 0;

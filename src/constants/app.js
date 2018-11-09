@@ -1,5 +1,5 @@
-export const step = 4;
-export const fieldWidth = 20;
+export const step = 3;
+export const fieldWidth = 28;
 export const fieldHeight = 25;
 export const occupations = {
   frontend: {

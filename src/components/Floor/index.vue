@@ -1,5 +1,17 @@
 <template>
-  <div class="floor">
+  <div
+      class="floor"
+      :style="{
+        width: fieldMeasure.width * fieldMeasure.step * 2 + 'rem',
+        height: fieldMeasure.height * fieldMeasure.step * 2  + 'rem',
+      }"
+  >
+    <div class="background"
+         :style="{
+        width: fieldMeasure.width * fieldMeasure.step * 2 + 'rem',
+        height: fieldMeasure.height * fieldMeasure.step * 2  + 'rem',
+      }"
+    ></div>
     <div class="inner">
       <Tile
           v-for="tile in getTiles()"
@@ -35,8 +47,8 @@
       getTiles() {
         const arr = [];
 
-        for (let i = 0; i < fieldWidth; i++) {
-          for (let j = 0; j < fieldHeight; j++) {
+        for (let i = 0; i < fieldHeight; i++) {
+          for (let j = 0; j < fieldWidth; j++) {
             arr.push({x: i, y: j});
           }
         }
@@ -45,7 +57,7 @@
       }
     },
     computed: {
-      ...mapState(['employees'])
+      ...mapState(['employees', 'fieldMeasure'])
     }
   }
 </script>

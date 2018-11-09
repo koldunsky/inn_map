@@ -10,8 +10,8 @@ export default {
           height: height ? height : step,
           // left: x * step,
           // top: y * step,
-          left: (x + y) * step,
-          top: (y - x) * step /2,
+          left: (x * 1.76 + y) * step,
+          top: (y * .77 - x) * step,
         };
 
         const finalObj = {};

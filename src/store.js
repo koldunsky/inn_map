@@ -3,14 +3,19 @@ import Vuex from 'vuex';
 import _each from 'lodash/each';
 
 import employees from './__mocks/eployees';
-import {occupations} from './constants/app';
+import {occupations, fieldWidth, fieldHeight, step} from './constants/app';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     employees,
-    occupations
+    occupations,
+    fieldMeasure: {
+      width: fieldWidth,
+      height: fieldHeight,
+      step: step
+    }
   },
   mutations: {
     highlightOccupation(state, name) {
