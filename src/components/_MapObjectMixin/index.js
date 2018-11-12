@@ -9,8 +9,8 @@ export default {
         const obj = {
           width: width ? width : step,
           height: height ? height : step,
-          left: (x * 1.76 + y) * k,
-          top: (y * .77 - x) * k + fieldWidth * step / 1.5789,
+          left: (x + y) * .7 * step,
+          top: (y - x) * .4 * step,
         };
 
         const finalObj = {};
