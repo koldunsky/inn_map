@@ -6,8 +6,7 @@
         height: fieldMeasure.height * fieldMeasure.step * 2  + 'rem',
       }"
   >
-    <div class="background"
-    ></div>
+    <img class="background" :src="bgSrc">
     <div class="inner">
       <Tile
           v-for="tile in getTiles()"
@@ -39,6 +38,13 @@
       Employee,
       Tile
     },
+
+    data() {
+      return {
+        bgSrc: require('../../assets/3rd-floor.png'),
+      };
+    },
+
     methods: {
       getTiles() {
         const arr = [];
