@@ -1,0 +1,31 @@
+.field {
+  position: absolute;
+  top: 70rem;
+  left: 35rem;
+}
+
+.inner {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+  //transform: rotateX(-49.6deg) rotateY(-12.4deg) rotateZ(-47.8deg);
+}
+
+.tile {
+  border: 1px solid red;
+  border-right: none;
+  border-bottom: none;
+  position: absolute;
+}
+
+.controls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.controls__input {
+  width: 500px;
+  display: block;
+}

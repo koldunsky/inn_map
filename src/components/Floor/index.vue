@@ -7,6 +7,7 @@
       }"
   >
     <img class="background" :src="bgSrc">
+    <TileField :tiles="getTiles()" />
     <div class="inner">
       <Tile
           v-for="tile in getTiles()"
@@ -30,13 +31,15 @@
 
   import Employee from '../Employee'
   import Tile from './tile';
+  import TileField from '../TileField';
 
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
   export default {
     components: {
       Employee,
-      Tile
+      Tile,
+      TileField
     },
 
     data() {
