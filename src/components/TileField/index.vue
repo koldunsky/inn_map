@@ -13,10 +13,10 @@
           :key="`${t.y}_${t.x}`"
           @click="onTileClick"
           :style="{
-          top: t.y * fieldMeasure.step + 'rem',
-          left: t.x * fieldMeasure.step + 'rem',
-          width: fieldMeasure.step + 'rem',
-          height: fieldMeasure.step + 'rem'
+          top: t.y * fieldMeasure.step * 2 + 'rem',
+          left: t.x * fieldMeasure.step * 2 + 'rem',
+          width: fieldMeasure.step * 2 + 'rem',
+          height: fieldMeasure.step * 2 + 'rem'
         }"
       >
 

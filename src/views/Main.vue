@@ -14,5 +14,10 @@
       Floor,
       InfoPanel
     },
+    mounted() {
+      document.addEventListener('click', (e) => {
+        e.target
+      })
+    }
   }
 </script>

@@ -2,11 +2,18 @@
   <div
       class="employee"
       :class="{
-        'employee__highlight': employee.isHighlighted
+        'employee_highlight': employee.isHighlighted,
+        'employee_active': employee.isActive
       }"
       :style="styles"
   >
-    <div class="info">
+    <div class="card">
+      <div
+          class="photo"
+        :style="{
+        backgroundImage: `url(${require('../../assets/logo.png')})`,
+        }">
+      </div>
       <div class="name">{{employee.name}}</div>
       <div class="email"><a :href="`mailto:${employee.email}`">{{employee.email}}</a></div>
       <div class="slack"><a :href="employee.slackLink">{{employee.slack}}</a></div>

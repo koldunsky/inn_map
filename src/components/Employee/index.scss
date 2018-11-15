@@ -1,3 +1,5 @@
+@import '../../global/style/utility/index';
+
 .employee {
   position: absolute;
   border: 1px solid black;
@@ -6,7 +8,7 @@
   height: 5px;
 }
 
-.info {
+.card {
   display: none;
   position: absolute;
   top: 10px;
@@ -15,14 +17,16 @@
   background: white;
   border: 1px solid grey;
   padding: 10px;
+  padding-left: 70px;
   text-align: left;
 
-  .employee:hover & {
+  .employee:hover &,
+  .employee_active & {
     display: block;
     top: 0;
   }
 }
-@keyframes highlite {
+@keyframes highlight {
   0% {
     box-shadow: 0 0 3px red;
   }
@@ -31,7 +35,18 @@
   }
 }
 
-.employee__highlight {
-  animation: highlite 1s linear infinite;
+.employee_highlight {
+  animation: highlight 1s linear infinite;
   border-color: red;
+}
+
+.photo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  background-position: center;
+  -webkit-background-size: cover;
+  background-size: cover;
 }
