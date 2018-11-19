@@ -9,8 +9,6 @@
 .inner {
   position: absolute;
   left: 0;
-  //pointer-events: none;
-  //transform: rotateX(-49.6deg) rotateY(-12.4deg) rotateZ(-47.8deg);
 }
 
 .tile {
@@ -19,6 +17,10 @@
   border-bottom: none;
   position: absolute;
   cursor: pointer;
+
+  &:hover {
+    background: rgba(cyan, .6);
+  }
 }
 
 .controls {
