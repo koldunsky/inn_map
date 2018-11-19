@@ -42,9 +42,14 @@
     data() {
       return {
         dimensions: {
-          x: -49.6,
-          y: -12.4,
-          z: -47.8,
+        //   x: -49.6,
+        //   y: -12.4,
+        //   z: -47.8,
+          x: 48.6,
+          y: 4.2,
+          z: 47,
+
+          // transform: rotateX(47.6deg) rotateY(3.8deg) rotateZ(47deg);
         },
         dummy: {
           x: 0,

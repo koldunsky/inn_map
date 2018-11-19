@@ -6,15 +6,15 @@
         height: fieldMeasure.height * fieldMeasure.step * 2  + 'rem',
       }"
   >
-    <img class="background" :src="bgSrc">
+    <img class="background" :src="bg">
     <TileField :tiles="getTiles()" />
     <div class="inner">
-      <Tile
-          v-for="tile in getTiles()"
-          :x="tile.y"
-          :y="tile.x"
-          :key="tile.x + '_' + tile.y"
-      />
+      <!--<Tile-->
+          <!--v-for="tile in getTiles()"-->
+          <!--:x="tile.y"-->
+          <!--:y="tile.x"-->
+          <!--:key="tile.x + '_' + tile.y"-->
+      <!--/>-->
       <Employee
           v-for="empl in employees"
           :key="empl.name + empl.coords.x + empl.coords.y"
@@ -36,6 +36,7 @@
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
   export default {
+    props: ['bg'],
     components: {
       Employee,
       Tile,
@@ -44,7 +45,6 @@
 
     data() {
       return {
-        bgSrc: require('../../assets/3rd-floor.png'),
       };
     },
 

@@ -1,6 +1,6 @@
 export const step = 1.3;
-export const fieldWidth = 36;
-export const fieldHeight = 50;
+export const fieldWidth = 55;
+export const fieldHeight = 46;
 export const occupations = {
   frontend: {
     name: 'frontend',
