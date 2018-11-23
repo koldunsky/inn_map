@@ -2,7 +2,11 @@
   <div
       class="floor"
   >
-    <div class="floorIndex">{{index}}</div>
+    <div class="floorIndex">
+      <div class="floorIndex__number">
+        {{5 - index}}
+      </div>
+    </div>
     <img class="background" :src="bg">
     {{thisFloorEmployees}}
     <TileField

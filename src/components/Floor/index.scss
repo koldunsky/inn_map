@@ -62,3 +62,38 @@
 .employeesField {
   @include objectField();
 }
+
+.floorIndex {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 40px;
+  padding: 2rem 0;
+
+  .floor:nth-child(1) & {
+    background: adjust-hue(#6A4E85, 180deg);
+  }
+  .floor:nth-child(2) & {
+    background: adjust-hue(#6A4E85, 135deg);
+  }
+  .floor:nth-child(3) & {
+    background: adjust-hue(#6A4E85, 90deg);
+  }
+  .floor:nth-child(4) & {
+    background: adjust-hue(#6A4E85, 45deg);
+  }
+  .floor:nth-child(5) & {
+    background: adjust-hue(#6A4E85, 0);
+  }
+}
+
+.floorIndex__number {
+  text-shadow: 2px 2px 0 rgba(black, .2);
+  position: absolute;
+  position: sticky;
+  top: 2rem;
+}
