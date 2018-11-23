@@ -23,22 +23,37 @@
 
 <script>
   import _MapObjectMixin from '../_MapObjectMixin';
+  import mapObject from '../../componentMixins/mapObject';
 
   export default {
     components: {},
-    props: ['employee'],
-    mounted() {
-
+    props: ['employee', 'placeFn'],
+    data() {
+      return {
+        cssPosition: {
+          left: null,
+          top: null,
+        }
+      }
     },
-    mixins: [_MapObjectMixin],
+    mounted() {
+      this.cssPosition = this.positionOnMap();
+    },
+    mixins: [_MapObjectMixin, mapObject],
     computed: {
       styles() {
+        const {top, left} = this.cssPosition;
+
         return {
-          ...this.mapPosition,
           width: '15px',
           height: '15px',
           backgroundColor: this.$store.state.occupations[this.employee.occupation].color,
+          top,
+          left
         };
+      },
+      coords() {
+        return this.employee.coords;
       }
     }
   }

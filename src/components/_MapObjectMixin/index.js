@@ -1,7 +1,7 @@
 import {step, fieldHeight, fieldWidth} from '../../constants/app';
 
 export default {
-  props: ['x', 'y', 'width', 'height'],
+  props: ['x', 'y', 'width', 'height', 'isIsometric'],
   computed: {
     mapPosition: function() {
       const {x, y, width, height} = this;

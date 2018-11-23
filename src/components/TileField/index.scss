@@ -1,9 +1,7 @@
-.field {
-  position: absolute;
-  top: 6.2rem;
-  left: 123.3rem;
-  //perspective: 50rem;
-  //transform-style: preserve-3d;
+@import "../../global/style/utility/index";
+
+.tileField {
+  @include objectField();
 }
 
 .inner {

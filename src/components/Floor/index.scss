@@ -1,3 +1,5 @@
+@import "../../global/style/utility/index";
+
 @keyframes pulse {
   0% {
     background: #000;
@@ -55,4 +57,8 @@
     width: 1px;
     height: 5px;
   }
+}
+
+.employeesField {
+  @include objectField();
 }

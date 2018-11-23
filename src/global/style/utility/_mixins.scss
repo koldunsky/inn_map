@@ -14,3 +14,10 @@
 @mixin fixedStretch() {
   @include stretch(fixed);
 }
+
+
+@mixin objectField() {
+  position: absolute;
+  top: 6.2rem;
+  left: 123.3rem;
+}

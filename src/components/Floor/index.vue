@@ -1,27 +1,26 @@
 <template>
   <div
       class="floor"
-      :style="{
-        width: fieldMeasure.width * fieldMeasure.step * 2 + 'rem',
-        height: fieldMeasure.height * fieldMeasure.step * 2  + 'rem',
-      }"
   >
+    <div class="floorIndex">{{index}}</div>
     <img class="background" :src="bg">
-    <TileField :tiles="getTiles()" />
-    <div class="inner">
-      <!--<Tile-->
-          <!--v-for="tile in getTiles()"-->
-          <!--:x="tile.y"-->
-          <!--:y="tile.x"-->
-          <!--:key="tile.x + '_' + tile.y"-->
-      <!--/>-->
+    {{thisFloorEmployees}}
+    <TileField
+        ref="TileField"
+        :tiles="getTiles()"
+        :floor="index"
+    />
+    <div class="employeesField">
       <Employee
-          v-for="empl in employees"
+          v-for="empl in thisFloorEmployees"
           :key="empl.name + empl.coords.x + empl.coords.y"
           :x="empl.coords.x"
           :y="empl.coords.y"
           :employee="empl"
+          :placeFn="$refs.TileField.coordsToBoundingClientRect"
       />
+    </div>
+    <div class="inner">
     </div>
   </div>
 </template>
@@ -36,7 +35,7 @@
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
   export default {
-    props: ['bg'],
+    props: ['bg', 'index'],
     components: {
       Employee,
       Tile,
@@ -46,6 +45,10 @@
     data() {
       return {
       };
+    },
+
+    mounted() {
+      console.info(this.$refs.TileField);
     },
 
     methods: {
@@ -62,7 +65,10 @@
       }
     },
     computed: {
-      ...mapState(['employees', 'fieldMeasure'])
+      ...mapState(['floors', 'fieldMeasure', 'employees']),
+      thisFloorEmployees() {
+        return this.$store.state.employees.filter((empl) => empl.coords && empl.coords.floor === this.index);
+      }
     }
   }
 </script>

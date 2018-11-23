@@ -1,5 +1,5 @@
 <template>
-  <div class="field">
+  <div class="tileField">
     <div class="dummy" :style="{
     top: `${dummy.y}px`,
     left: `${dummy.x}px`
@@ -28,16 +28,16 @@
 
       </div>
     </div>
-    <div class="controls">
-      <label
-          v-for="(dim, i) in dimensions"
-          :key="i"
-      >
-        {{i}}
-        <input class="controls__input" type="range" :name="i" min="-180" max="180" :value="dim" @input='updateAxis'
-               step=".2">
-      </label>
-    </div>
+    <!--<div class="controls">-->
+      <!--<label-->
+          <!--v-for="(dim, i) in dimensions"-->
+          <!--:key="i"-->
+      <!--&gt;-->
+        <!--{{i}}-->
+        <!--<input class="controls__input" type="range" :name="i" min="-180" max="180" :value="dim" @input='updateAxis'-->
+               <!--step=".2">-->
+      <!--</label>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -49,14 +49,9 @@
     data() {
       return {
         dimensions: {
-          //   x: -49.6,
-          //   y: -12.4,
-          //   z: -47.8,
           x: 48.6,
           y: 4.2,
           z: 47,
-
-          // transform: rotateX(47.6deg) rotateY(3.8deg) rotateZ(47deg);
         },
         dummy: {
           x: 0,
@@ -64,7 +59,7 @@
         }
       }
     },
-    props: ['tiles'],
+    props: ['tiles', 'floor'],
     methods: {
       updateAxis(e) {
         const {name, value} = e.target;
@@ -72,9 +67,15 @@
       },
       onTileClick(e) {
         const {x, y} = e.target.dataset;
+        const {floor} = this;
 
-        console.info(e.target.getBoundingClientRect());
         this.placeDummy(x, y);
+        if(this.$store.state.selectedEmployee) {
+          this.$store.commit('putEmployeeInPlace', {
+            x, y, floor
+          });
+          this.$store.commit('clearSelectedEmployee');
+        }
       },
 
       coordsToBoundingClientRect(x, y) {

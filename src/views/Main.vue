@@ -1,20 +1,21 @@
 <template>
   <div class="main">
-    <Floor v-for="bg in backgrounds" :bg="bg"/>
+    <Floor v-for="(bg, i) in backgrounds" :bg="bg" :index="i"/>
     <InfoPanel />
+    <ObjectsHolder />
   </div>
 </template>
 
 <script>
   import Floor from '../components/Floor';
   import InfoPanel from '../components/InfoPanel';
-  import LeafletTest from '../components/LeafletTest';
+  import ObjectsHolder from '../components/ObjectsHolder';
 
   export default {
     components: {
       Floor,
       InfoPanel,
-      LeafletTest,
+      ObjectsHolder,
     },
     data() {
       return {

@@ -1,15 +1,20 @@
 import { occupations } from '../constants/app';
 
+let id = 0;
+
 function GetNewEmployee(name, occupation, coords, isActive) {
+  id++;
+
   return {
     name,
-    coords,
+    coords: null,
     occupation,
     isHighlited: false,
     email: 'dummy@email.com',
     slack: 'slackDummy',
     slackLink: 'https://innovaco.slack.com/team/U5Q1H3KK6',
-    isActive
+    isActive,
+    id
   }
 }
 
