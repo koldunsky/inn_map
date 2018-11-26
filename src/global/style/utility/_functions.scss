@@ -1,0 +1,8 @@
+$layers: (
+  'floors',
+  'controls'
+);
+
+@function z($layer) {
+  @return index($layers, $layer);
+}

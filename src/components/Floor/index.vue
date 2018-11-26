@@ -1,6 +1,7 @@
 <template>
   <div
       class="floor"
+      :style="{'z-index': 5 - index}"
   >
     <div class="floorIndex">
       <div class="floorIndex__number">
@@ -8,24 +9,38 @@
       </div>
     </div>
     <img class="background" :src="bg">
-    {{thisFloorEmployees}}
-    <TileField
-        ref="TileField"
-        :tiles="getTiles()"
-        :floor="index"
-    />
-    <div class="employeesField">
+    <!--{{thisFloorEmployees}}-->
+    <div class="objectsField"  v-if="readyToRenderObjects">
+      <Table
+          :vertical="true"
+          :coords="{x: 5, y: 4, floor: 0}"
+          :placeFn="$refs.TileField.coordsToBoundingClientRect"
+      />
+      <Table
+          :vertical="true"
+          :coords="{x: 6, y: 4, floor: 0}"
+          :placeFn="$refs.TileField.coordsToBoundingClientRect"
+      />
+      <Table
+          :coords="{x: 8, y: 3, floor: 0}"
+          :placeFn="$refs.TileField.coordsToBoundingClientRect"
+      />
+    </div>
+    <div class="employeesField" v-if="readyToRenderObjects">
       <Employee
           v-for="empl in thisFloorEmployees"
           :key="empl.name + empl.coords.x + empl.coords.y"
-          :x="empl.coords.x"
-          :y="empl.coords.y"
+          :coords="empl.coords"
           :employee="empl"
           :placeFn="$refs.TileField.coordsToBoundingClientRect"
       />
     </div>
-    <div class="inner">
-    </div>
+    <TileField
+        ref="TileField"
+        :tiles="getTiles()"
+        :floor="index"
+        @onReady="onTileFieldsReady"
+    />
   </div>
 </template>
 
@@ -33,8 +48,8 @@
   import { mapState } from 'vuex'
 
   import Employee from '../Employee'
-  import Tile from './tile';
   import TileField from '../TileField';
+  import Table from '../_furniture/Table';
 
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
@@ -42,12 +57,13 @@
     props: ['bg', 'index'],
     components: {
       Employee,
-      Tile,
-      TileField
+      TileField,
+      Table
     },
 
     data() {
       return {
+        readyToRenderObjects: false,
       };
     },
 
@@ -56,6 +72,10 @@
     },
 
     methods: {
+      onTileFieldsReady() {
+        console.info('zxax');
+        this.readyToRenderObjects = true;
+      },
       getTiles() {
         const arr = [];
 

@@ -60,6 +60,12 @@
       }
     },
     props: ['tiles', 'floor'],
+
+    mounted() {
+      console.info('safas');
+      this.$emit('onReady');
+    },
+
     methods: {
       updateAxis(e) {
         const {name, value} = e.target;
@@ -78,8 +84,14 @@
         }
       },
 
-      coordsToBoundingClientRect(x, y) {
-        return this.$el.querySelector(`.tile_${y}_${x}`).getBoundingClientRect();
+      coordsToBoundingClientRect(x, y, correction = false) {
+        const rect = this.$el.querySelector(`.tile_${y}_${x}`).getBoundingClientRect();
+
+        if(correction) {
+          rect.x = rect.x + rect.width /2;
+          rect.y = rect.y + rect.height /2;
+        }
+        return rect;
       },
 
       placeDummy(x, y) {

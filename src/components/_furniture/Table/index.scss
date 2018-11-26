@@ -1,3 +1,14 @@
-.COMPONENT_NAME {
+$size: 78px;
 
+.table {
+  display: block;
+  width: $size;
+  height: $size;
+  background-image: url('../../../assets/furniture/table.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.vertical {
+  background-image: url('../../../assets/furniture/table_right.png');
 }

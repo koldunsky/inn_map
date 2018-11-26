@@ -21,6 +21,12 @@
   }
 }
 
+.tile::after {
+  content: '';
+  position: absolute;
+  background: black;
+}
+
 .controls {
   position: fixed;
   top: 0;

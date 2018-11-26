@@ -22,27 +22,15 @@
 </template>
 
 <script>
-  import _MapObjectMixin from '../_MapObjectMixin';
   import mapObject from '../../componentMixins/mapObject';
 
   export default {
     components: {},
-    props: ['employee', 'placeFn'],
-    data() {
-      return {
-        cssPosition: {
-          left: null,
-          top: null,
-        }
-      }
-    },
-    mounted() {
-      this.cssPosition = this.positionOnMap();
-    },
-    mixins: [_MapObjectMixin, mapObject],
+    props: ['employee'],
+    mixins: [mapObject],
     computed: {
       styles() {
-        const {top, left} = this.cssPosition;
+        const {top, left} = this.mapCssPosition;
 
         return {
           width: '15px',
@@ -51,9 +39,6 @@
           top,
           left
         };
-      },
-      coords() {
-        return this.employee.coords;
       }
     }
   }

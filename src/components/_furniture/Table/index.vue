@@ -1,14 +1,34 @@
 <template>
-  <div class="COMPONENT_NAME">
-
+  <div
+      class="table"
+      :class="{
+        vertical
+      }"
+      :style="styles"
+  >
   </div>
 </template>
 
 <script>
+  import mapObject from '../../../componentMixins/mapObject';
+
   export default {
+    mixins: [mapObject],
+    data() {
+      return {
+
+      }
+    },
     components: {
     },
-    props: {
+    props: [
+      'vertical',
+    ],
+    computed: {
+      styles() {
+
+        return this.mapCssPosition;
+      }
     }
   }
 </script>

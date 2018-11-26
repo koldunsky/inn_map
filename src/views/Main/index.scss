@@ -1,0 +1,13 @@
+@import '../../global/style/utility/index';
+
+.floors {
+  position: relative;
+  z-index: z(floors);
+}
+
+.controls {
+  position: fixed;
+  width: 100%;
+  bottom: 5rem;
+  z-index: z(controls);
+}
