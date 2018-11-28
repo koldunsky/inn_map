@@ -1,3 +1,5 @@
+@import '../../../global/style/utility/index';
+
 $size: 75px;
 
 .table {
@@ -8,6 +10,8 @@ $size: 75px;
   background-image: url('../../../assets/furniture/table.png');
   background-size: contain;
   background-repeat: no-repeat;
+  z-index: z(ontop);
+  position: absolute;
 }
 
 .vertical {

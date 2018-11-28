@@ -4,16 +4,20 @@
       :class="{
         vertical
       }"
-      :style="styles"
+      :style="{
+        top: top,
+        left: left
+      }"
   >
   </div>
 </template>
 
 <script>
   import mapObject from '../../../componentMixins/mapObject';
+  import draggableObject from '../../../componentMixins/draggableObject';
 
   export default {
-    mixins: [mapObject],
+    mixins: [mapObject, draggableObject],
     data() {
       return {
 
@@ -25,10 +29,6 @@
       'vertical',
     ],
     computed: {
-      styles() {
-
-        return this.mapCssPosition;
-      }
     }
   }
 </script>

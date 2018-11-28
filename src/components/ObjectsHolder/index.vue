@@ -1,6 +1,6 @@
 <template>
   <div class="objectsHolder">
-    <button
+    <div
         v-for="empl in unplacedEmployees"
         :key="empl.id"
         class="employee"
@@ -10,12 +10,13 @@
         @click="$store.commit('selectEmployeeToPutInPlace', empl.id)"
     >
       {{empl.name}}
-    </button>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
+
   export default {
     components: {
     },

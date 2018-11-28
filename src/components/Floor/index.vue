@@ -10,21 +10,21 @@
     </div>
     <img class="background" :src="bg">
     <!--{{thisFloorEmployees}}-->
+    <Table
+        :vertical="true"
+        :coords="{x: 5, y: 4, floor: 0}"
+        :placeFn="$refs.TileField.coordsToBoundingClientRect"
+    />
+    <Table
+        :vertical="true"
+        :coords="{x: 6, y: 4, floor: 0}"
+        :placeFn="$refs.TileField.coordsToBoundingClientRect"
+    />
+    <Table
+        :coords="{x: 8, y: 3, floor: 0}"
+        :placeFn="$refs.TileField.coordsToBoundingClientRect"
+    />
     <div class="objectsField"  v-if="readyToRenderObjects">
-      <Table
-          :vertical="true"
-          :coords="{x: 5, y: 4, floor: 0}"
-          :placeFn="$refs.TileField.coordsToBoundingClientRect"
-      />
-      <Table
-          :vertical="true"
-          :coords="{x: 6, y: 4, floor: 0}"
-          :placeFn="$refs.TileField.coordsToBoundingClientRect"
-      />
-      <Table
-          :coords="{x: 8, y: 3, floor: 0}"
-          :placeFn="$refs.TileField.coordsToBoundingClientRect"
-      />
     </div>
     <div class="employeesField" v-if="readyToRenderObjects">
       <Employee
@@ -41,7 +41,6 @@
         :floor="index"
         @onReady="onTileFieldsReady"
     />
-    <DragElement />
   </div>
 </template>
 
@@ -51,7 +50,6 @@
   import Employee from '../Employee'
   import TileField from '../TileField';
   import Table from '../_furniture/Table';
-  import DragElement from '../DragElement';
 
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
@@ -60,8 +58,7 @@
     components: {
       Employee,
       TileField,
-      Table,
-      DragElement
+      Table
     },
 
     data() {
