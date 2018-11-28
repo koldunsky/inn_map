@@ -1,6 +1,7 @@
 $layers: (
   'floors',
-  'controls'
+  'controls',
+  'ontop'
 );
 
 @function z($layer) {

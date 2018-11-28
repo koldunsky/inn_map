@@ -1,5 +1,10 @@
 <template>
-  <div class="main">
+  <div class="main"
+       :class="{'global_tile_on': showTile}"
+  >
+    <label class="checkbox" >
+      <input type="checkbox" v-model="showTile"> Показывать сетку
+    </label>
     <div class="floors">
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"
@@ -26,6 +31,7 @@
     },
     data() {
       return {
+        showTile: false,
         backgrounds: [
           require('../../assets/floors/5th-floor.png'),
           require('../../assets/floors/4th-floor.png'),

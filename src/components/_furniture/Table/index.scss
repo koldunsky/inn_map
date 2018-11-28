@@ -1,9 +1,10 @@
-$size: 78px;
+$size: 75px;
 
 .table {
   display: block;
   width: $size;
   height: $size;
+  background-color: rgba(pink, .7);
   background-image: url('../../../assets/furniture/table.png');
   background-size: contain;
   background-repeat: no-repeat;
