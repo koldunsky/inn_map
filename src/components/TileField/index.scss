@@ -10,13 +10,15 @@
 }
 
 
+.tile {
+  position: absolute;
+}
+
 .global_tile_on .tile {
   border: 1px solid #4f163a;
-  border-right: none;
   border-bottom: none;
-  position: absolute;
+  border-right: none;
   cursor: pointer;
-
   &:hover {
     background: rgba(cyan, .6);
   }
