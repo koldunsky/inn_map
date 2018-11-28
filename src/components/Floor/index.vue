@@ -41,6 +41,7 @@
         :floor="index"
         @onReady="onTileFieldsReady"
     />
+    <DragElement />
   </div>
 </template>
 
@@ -50,6 +51,7 @@
   import Employee from '../Employee'
   import TileField from '../TileField';
   import Table from '../_furniture/Table';
+  import DragElement from '../DragElement';
 
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
@@ -58,7 +60,8 @@
     components: {
       Employee,
       TileField,
-      Table
+      Table,
+      DragElement
     },
 
     data() {
