@@ -22,12 +22,11 @@
 </template>
 
 <script>
-  import mapObject from '../../componentMixins/mapObject';
 
   export default {
     components: {},
     props: ['employee'],
-    mixins: [mapObject],
+    mixins: [],
     computed: {
       styles() {
         const {top, left} = this.mapCssPosition;

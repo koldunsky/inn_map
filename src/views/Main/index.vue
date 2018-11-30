@@ -22,7 +22,7 @@
 <script>
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
-  import ObjectsHolder from '../../components/ObjectsHolder/index';
+  import ObjectsHolder from '../../components/ObjectsPalette/index';
   import DragElement from '../../components/DragElement';
 
   export default {

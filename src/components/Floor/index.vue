@@ -9,21 +9,6 @@
       </div>
     </div>
     <img class="background" :src="bg">
-    <!--{{thisFloorEmployees}}-->
-    <Table
-        :vertical="true"
-        :coords="{x: 5, y: 4, floor: 0}"
-        :placeFn="$refs.TileField.coordsToBoundingClientRect"
-    />
-    <Table
-        :vertical="true"
-        :coords="{x: 6, y: 4, floor: 0}"
-        :placeFn="$refs.TileField.coordsToBoundingClientRect"
-    />
-    <Table
-        :coords="{x: 8, y: 3, floor: 0}"
-        :placeFn="$refs.TileField.coordsToBoundingClientRect"
-    />
     <div class="objectsField"  v-if="readyToRenderObjects">
     </div>
     <div class="employeesField" v-if="readyToRenderObjects">

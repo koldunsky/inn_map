@@ -20,7 +20,6 @@ export default {
       console.info(e);
     },
     moveAt(e) {
-      console.info(e);
       this.x = e.pageX - this.shiftX;
       this.y = e.pageY - this.shiftY;
     },

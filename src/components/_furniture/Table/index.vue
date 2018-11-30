@@ -13,23 +13,15 @@
 </template>
 
 <script>
-  import mapObject from '../../../componentMixins/mapObject';
   import draggableObject from '../../../componentMixins/draggableObject';
 
   export default {
-    mixins: [mapObject, draggableObject],
+    mixins: [draggableObject],
     data() {
       return {
 
       }
     },
-    components: {
-    },
-    props: [
-      'vertical',
-    ],
-    computed: {
-    }
   }
 </script>
 

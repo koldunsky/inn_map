@@ -4,13 +4,17 @@ import _each from 'lodash/each';
 import _findIndex from 'lodash/findIndex';
 
 import employees from './__mocks/eployees';
+import furniture from './__mocks/furniture';
 import {occupations, fieldWidth, fieldHeight, step} from './constants/app';
+import draggableObject from "./componentMixins/draggableObject";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     employees,
+    furniture,
+    draggedObject: null,
     selectedEmployee: null,
     floors: [
       // {
@@ -25,6 +29,18 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    startDragObject(state, object) {
+      state.draggedObject = object;
+    },
+
+    stopDragObject(state, {floor, coords}) {
+      state.draggedObject = {
+        floor,
+        coords,
+        ...state.draggedObject,
+      }
+    },
+
     selectEmployeeToPutInPlace(state, id) {
       state.selectedEmployee = id;
     },
