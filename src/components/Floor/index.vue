@@ -2,7 +2,19 @@
   <div
       class="floor"
       :style="{'z-index': 5 - index}"
+      :data-index="index"
   >
+    <div class="testObjects">
+      <div
+          v-for="o in thisFloorPlacedObjects"
+          class="testObject"
+          :style="{
+          top: o.top + 'px',
+          left: o.left + 'px'
+          }"
+      >
+      </div>
+    </div>
     <div class="floorIndex">
       <div class="floorIndex__number">
         {{5 - index}}
@@ -39,7 +51,15 @@
   import {fieldHeight, fieldWidth} from '../../constants/app';
 
   export default {
-    props: ['bg', 'index'],
+    props: {
+      bg: {
+        type: String,
+      },
+      index: {
+        type: Number,
+        reqired: true
+      }
+    },
     components: {
       Employee,
       TileField,
@@ -74,9 +94,12 @@
       }
     },
     computed: {
-      ...mapState(['floors', 'fieldMeasure', 'employees']),
+      ...mapState(['floors', 'fieldMeasure', 'employees', 'placedObjects']),
       thisFloorEmployees() {
         return this.$store.state.employees.filter((empl) => empl.coords && empl.coords.floor === this.index);
+      },
+      thisFloorPlacedObjects() {
+        return this.$store.state.placedObjects.filter(o => parseInt(o.floor, 10) === this.index);
       }
     }
   }

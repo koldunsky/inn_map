@@ -42,8 +42,9 @@ $fadedFadedBlack: lighten($fadedBlack, 50%);
 }
 
 .furni {
-  margin-right: 3px;
-  margin-bottom: 3px;
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 5px;
   border-radius: 3px;
   border: 1px solid $fadedFadedBlack;
   padding: 2px;

@@ -1,14 +1,13 @@
 <template>
   <div
       class="table"
-      :class="{
-        vertical
-      }"
       :style="{
         top: top,
-        left: left
+        left: left,
+        position
       }"
   >
+    <img :src="src" alt="" class="image">
   </div>
 </template>
 

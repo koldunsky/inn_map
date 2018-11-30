@@ -18,9 +18,9 @@
           v-for="furni in furniture"
           :key="furni.image"
           class="furni"
-          @click="onObjectClick(furni)"
       >
-        <img :src="furni.image">
+        <img :src="furni.image" >
+        <Table :src="furni.image" />
       </div>
     </div>
   </div>

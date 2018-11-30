@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     employees,
     furniture,
+    placedObjects: [],
     draggedObject: null,
     selectedEmployee: null,
     floors: [
@@ -33,12 +34,9 @@ export default new Vuex.Store({
       state.draggedObject = object;
     },
 
-    stopDragObject(state, {floor, coords}) {
-      state.draggedObject = {
-        floor,
-        coords,
-        ...state.draggedObject,
-      }
+    stopDragObject(state, coords) {
+      state.draggedObject = null;
+      state.placedObjects.push(coords);
     },
 
     selectEmployeeToPutInPlace(state, id) {
