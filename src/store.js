@@ -38,11 +38,29 @@ export default new Vuex.Store({
       state.draggedObject = object;
     },
 
-    stopDragObject(state, {coords, type}) {
+    moveExistingObject(state, {coords, id}) {
+      const i = _findIndex(state.employees, {id});
+      const placedObjects = [...state.placedObjects];
+      let [nashParen]= state.placedObjects.filter((obj) => id == obj.id);
+      nashParen = {
+        ...nashParen,
+        ...coords,
+      };
+
+      state.draggedObject = null;
+      placedObjects.splice(i, 1);
+      placedObjects.push(nashParen);
+
+      state.placedObjects = placedObjects;
+
+    },
+
+    addNewObjectToMap(state, {coords, type}) {
       state.draggedObject = null;
       const obj = {
         ...objectMap[type],
-        ...coords
+        ...coords,
+        id: `id_${Date.now()}`
       };
       state.placedObjects.push(obj);
     },

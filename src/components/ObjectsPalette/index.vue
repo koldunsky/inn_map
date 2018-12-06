@@ -23,6 +23,7 @@
         <Table
             :image="furni.image"
             :type="furni.type"
+            :cloneOnMouseUp="true"
         />
       </div>
     </div>

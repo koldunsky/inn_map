@@ -2,6 +2,10 @@ import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
 
 export default {
   props: {
+    id: {
+      type: (String || Number),
+      default: null,
+    },
     type: {
       required: true,
       type: String
@@ -52,10 +56,19 @@ export default {
     onMouseUp(e) {
       this.dragged = false;
       document.removeEventListener('mousemove', this.moveAt);
-      this.$store.commit('stopDragObject', {
-        coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
-        type: this.type,
-      });
+
+      if (this.id === null) {
+        this.$store.commit('addNewObjectToMap', {
+          coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
+          type: this.type,
+        });
+      } else {
+        this.$store.commit('moveExistingObject', {
+          coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
+          id: this.id,
+        });
+      }
+
     },
 
     getCoords() {   // кроме IE8-
