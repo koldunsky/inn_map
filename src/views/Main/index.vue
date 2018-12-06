@@ -11,7 +11,6 @@
              :bg="bg"
              :index="i"/>
     </div>
-    <DragElement />
     <div class="controls">
       <InfoPanel />
       <ObjectsHolder />
@@ -23,14 +22,12 @@
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
   import ObjectsHolder from '../../components/ObjectsPalette/index';
-  import DragElement from '../../components/DragElement';
 
   export default {
     components: {
       Floor,
       InfoPanel,
-      ObjectsHolder,
-      DragElement
+      ObjectsHolder
     },
     data() {
       return {

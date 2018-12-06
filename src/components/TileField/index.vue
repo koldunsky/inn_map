@@ -62,7 +62,6 @@
     props: ['tiles', 'floor'],
 
     mounted() {
-      console.info('safas');
       this.$emit('onReady');
     },
 

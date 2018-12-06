@@ -6,9 +6,13 @@ import _findIndex from 'lodash/findIndex';
 import employees from './__mocks/eployees';
 import furniture from './__mocks/furniture';
 import {occupations, fieldWidth, fieldHeight, step} from './constants/app';
-import draggableObject from "./componentMixins/draggableObject";
 
 Vue.use(Vuex);
+
+const objectMap = {
+  table: furniture[0],
+  table_7: furniture[1],
+};
 
 export default new Vuex.Store({
   state: {
@@ -34,9 +38,13 @@ export default new Vuex.Store({
       state.draggedObject = object;
     },
 
-    stopDragObject(state, coords) {
+    stopDragObject(state, {coords, type}) {
       state.draggedObject = null;
-      state.placedObjects.push(coords);
+      const obj = {
+        ...objectMap[type],
+        ...coords
+      };
+      state.placedObjects.push(obj);
     },
 
     selectEmployeeToPutInPlace(state, id) {

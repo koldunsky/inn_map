@@ -1,4 +1,4 @@
-export default (e) => {
+export default (e, correction = {top: 0, left: 0}) => {
   const floors = document.querySelectorAll('.floor');
   let result = {
     floor: null,
@@ -23,8 +23,8 @@ export default (e) => {
 
       result = {
         floor: flr.dataset.index,
-        top: pageYOffset + e.clientY - realRect.top,
-        left: pageXOffset + e.clientX - realRect.left,
+        top: pageYOffset + e.clientY - realRect.top - correction.top,
+        left: pageXOffset + e.clientX - realRect.left - correction.left,
       };
 
       return true;

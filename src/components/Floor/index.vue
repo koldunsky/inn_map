@@ -21,9 +21,17 @@
       </div>
     </div>
     <img class="background" :src="bg">
-    <div class="objectsField"  v-if="readyToRenderObjects">
+    <div class="objectsField">
+      <Table
+          v-for="o in thisFloorPlacedObjects"
+          :image="o.image"
+          :type="o.type"
+          :y="o.top"
+          :x="o.left"
+      >
+      </Table>
     </div>
-    <div class="employeesField" v-if="readyToRenderObjects">
+    <div class="employeesField">
       <Employee
           v-for="empl in thisFloorEmployees"
           :key="empl.name + empl.coords.x + empl.coords.y"
@@ -32,17 +40,11 @@
           :placeFn="$refs.TileField.coordsToBoundingClientRect"
       />
     </div>
-    <TileField
-        ref="TileField"
-        :tiles="getTiles()"
-        :floor="index"
-        @onReady="onTileFieldsReady"
-    />
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import {mapState} from 'vuex'
 
   import Employee from '../Employee'
   import TileField from '../TileField';
@@ -66,33 +68,7 @@
       Table
     },
 
-    data() {
-      return {
-        readyToRenderObjects: false,
-      };
-    },
-
-    mounted() {
-      console.info(this.$refs.TileField);
-    },
-
-    methods: {
-      onTileFieldsReady() {
-        console.info('zxax');
-        this.readyToRenderObjects = true;
-      },
-      getTiles() {
-        const arr = [];
-
-        for (let i = 0; i < fieldHeight; i++) {
-          for (let j = 0; j < fieldWidth; j++) {
-            arr.push({x: i, y: j});
-          }
-        }
-
-        return arr;
-      }
-    },
+    methods: {},
     computed: {
       ...mapState(['floors', 'fieldMeasure', 'employees', 'placedObjects']),
       thisFloorEmployees() {

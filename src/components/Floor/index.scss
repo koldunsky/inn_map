@@ -64,7 +64,10 @@
 }
 
 .objectsField {
-  @include objectField();
+  position: absolute;
+  top: 0;
+  left: 0;
+  //@include objectField();
 }
 
 .floorIndex {

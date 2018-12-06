@@ -20,7 +20,10 @@
           class="furni"
       >
         <img :src="furni.image" >
-        <Table :src="furni.image" />
+        <Table
+            :image="furni.image"
+            :type="furni.type"
+        />
       </div>
     </div>
   </div>

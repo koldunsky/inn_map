@@ -2,15 +2,28 @@ import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
 
 export default {
   props: {
-    src: {
+    type: {
+      required: true,
       type: String
+    },
+    image: {
+      required: true,
+      type: String
+    },
+    x: {
+      type: Number,
+      default: 0
+    },
+    y: {
+      type: Number,
+      default: 0
     }
   },
   data() {
       return {
       dragged: false,
-      x: 0,
-      y: 0,
+      innerX: 0,
+      innerY: 0,
       shiftX: null,
       shiftY: null,
     }
@@ -29,17 +42,20 @@ export default {
       this.shiftY = e.clientY - coords.top;
       this.dragged = true;
       document.addEventListener('mousemove', this.moveAt);
-      document.addEventListener('mousemove', console.info);
+      console.warn('mousemove', 'added');
     },
     moveAt(e) {
-      this.x = e.clientX - this.shiftX;
-      this.y = e.clientY - this.shiftY;
+      this.innerX = e.clientX - this.shiftX;
+      this.innerY = e.clientY - this.shiftY;
     },
 
     onMouseUp(e) {
       this.dragged = false;
       document.removeEventListener('mousemove', this.moveAt);
-      this.$store.commit('stopDragObject', mouseCoordsToFloorCoords(e));
+      this.$store.commit('stopDragObject', {
+        coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
+        type: this.type,
+      });
     },
 
     getCoords() {   // кроме IE8-
@@ -52,11 +68,15 @@ export default {
   },
   computed: {
     top() {
-      return this.y + 'px'
+      const amount = this.dragged ? this.innerY : this.y;
+
+      return amount + 'px'
     },
 
     left() {
-      return this.x + 'px'
+      const amount = this.dragged ? this.innerX : this.x;
+
+      return amount + 'px'
     },
     position() {
       return this.dragged ? 'fixed' : 'absolute';

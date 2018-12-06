@@ -7,7 +7,7 @@
         position
       }"
   >
-    <img :src="src" alt="" class="image">
+    <img :src="image" alt="" class="image">
   </div>
 </template>
 

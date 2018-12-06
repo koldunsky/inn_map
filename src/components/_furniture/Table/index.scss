@@ -5,10 +5,11 @@
 .table {
   display: block;
   z-index: z(ontop);
+  outline: 1px solid blue;
 }
 
 .image {
-  @include stretch();
+  //@include stretch();
 }
 
 .vertical {
