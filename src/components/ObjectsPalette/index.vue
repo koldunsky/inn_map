@@ -2,24 +2,29 @@
   <div class="objectsPalette">
     <div class="employees">
       <div
+          class="empl"
           v-for="empl in unplacedEmployees"
           :key="empl.id"
-          class="employee"
-          :class="{
-          isSelected: selectedEmployee === empl.id
-        }"
-          @click="$store.commit('selectEmployeeToPutInPlace', empl.id)"
       >
-        {{empl.name}}
+        <Employee
+            type="employee"
+            :image="require('../../assets/logo.png')"
+            :employee="empl"
+            :class="{
+          isSelected: selectedEmployee === empl.id,
+        }"
+            @click="$store.commit('selectEmployeeToPutInPlace', empl.id)"
+        >
+          {{empl.name}}
+        </Employee>
       </div>
     </div>
     <div class="furniture">
       <div
           v-for="furni in furniture"
-          :key="furni.image"
           class="furni"
       >
-        <img :src="furni.image" >
+        <img :src="furni.image" class="bg" >
         <Table
             :image="furni.image"
             :type="furni.type"
@@ -33,10 +38,12 @@
 <script>
   import { mapState } from 'vuex'
   import Table from '../_furniture/Table';
+  import Employee from '../Employee';
 
   export default {
     components: {
-      Table
+      Table,
+      Employee
     },
     methods: {
       onObjectClick(obj) {

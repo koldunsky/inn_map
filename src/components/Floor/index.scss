@@ -82,19 +82,19 @@
   padding: 2rem 0;
 
   .floor:nth-child(1) & {
-    background: adjust-hue(#6A4E85, 180deg);
+    background: adjust-hue($innViolet, 180deg);
   }
   .floor:nth-child(2) & {
-    background: adjust-hue(#6A4E85, 135deg);
+    background: adjust-hue($innViolet, 135deg);
   }
   .floor:nth-child(3) & {
-    background: adjust-hue(#6A4E85, 90deg);
+    background: adjust-hue($innViolet, 90deg);
   }
   .floor:nth-child(4) & {
-    background: adjust-hue(#6A4E85, 45deg);
+    background: adjust-hue($innViolet, 45deg);
   }
   .floor:nth-child(5) & {
-    background: adjust-hue(#6A4E85, 0);
+    background: adjust-hue($innViolet, 0);
   }
 }
 

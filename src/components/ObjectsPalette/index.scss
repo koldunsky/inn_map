@@ -15,6 +15,10 @@ $fadedFadedBlack: lighten($fadedBlack, 50%);
   box-shadow:
           0 1px 5px $fadedBlack inset,
           0 1px 5px $fadedBlack;
+
+  & > div:not(:first-child) {
+    border-left: 1px solid lighten($fadedBlack, 50%);
+  }
 }
 
 .employees {
@@ -23,11 +27,17 @@ $fadedFadedBlack: lighten($fadedBlack, 50%);
   flex-wrap: wrap;
 }
 
-.employee {
-  background: white;
-  padding: 10px;
-  border: 1px solid red;
+.employeesButtons {
+  display: flex;
+  padding-right: 10px;
+  flex-wrap: wrap;
 }
+
+//.employee {
+//  background: white;
+//  padding: 10px;
+//  border: 1px solid red;
+//}
 
 .isSelected {
   background: blue;
@@ -36,7 +46,6 @@ $fadedFadedBlack: lighten($fadedBlack, 50%);
 
 .furniture {
   padding-left: 10px;
-  border-left: 1px solid lighten($fadedBlack, 50%);
   display: flex;
   flex-wrap: wrap;
 }
@@ -57,4 +66,14 @@ $fadedFadedBlack: lighten($fadedBlack, 50%);
   img {
     display: block;
   }
+}
+
+.bg {
+  opacity: 0;
+}
+
+.empl {
+  width: 40px;
+  height: 40px;
+  position: relative;
 }
