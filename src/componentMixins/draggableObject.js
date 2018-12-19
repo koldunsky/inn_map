@@ -95,6 +95,9 @@ export default {
     },
     position() {
       return this.dragged ? 'fixed' : 'absolute';
+    },
+    zIndex() {
+      return this.dragged ? 2 : 1;
     }
   }
 }

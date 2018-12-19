@@ -4,7 +4,8 @@
       :style="{
         top: top,
         left: left,
-        position
+        position,
+        zIndex
       }"
   >
     <img :src="image" alt="" class="image">
