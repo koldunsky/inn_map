@@ -40,7 +40,6 @@ export default {
   },
   methods: {
     onMouseDown(e) {
-      console.info('onMouseDown');
       const coords = this.getCoords();
       this.shiftX = e.clientX - coords.left;
       this.shiftY = e.clientY - coords.top;
@@ -57,7 +56,6 @@ export default {
     },
 
     onMouseUp(e) {
-      console.warn('onMouseUp');
       this.dragged = false;
       document.removeEventListener('mousemove', this.moveAt);
 

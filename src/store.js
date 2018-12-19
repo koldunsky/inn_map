@@ -19,6 +19,7 @@ export default new Vuex.Store({
     employees,
     furniture,
     placedObjects: [],
+    placedEmployees: [],
     draggedObject: null,
     selectedEmployee: null,
     floors: [
@@ -27,35 +28,18 @@ export default new Vuex.Store({
       // }
     ],
     occupations,
-    fieldMeasure: {
-      width: fieldWidth,
-      height: fieldHeight,
-      step: step
-    }
   },
   mutations: {
     startDragObject(state, object) {
       state.draggedObject = object;
     },
 
-    moveExistingObject(state, {coords, id}) {
-      const i = _findIndex(state.placedObjects, {id});
-      if(i === -1) {
-        console.error(`ненайден объект с id=${id}`, 'list:', state.placedObjects);
-        return false;
-      }
-      const placedObjects = [...state.placedObjects];
-      let [nashParen]= state.placedObjects.filter((obj) => id == obj.id);
-      nashParen = {
-        ...nashParen,
-        ...coords,
-      };
+    moveExistingObject(state, payload) {
+      state.placedObjects = moveExistingObject(state, payload, state.placedObjects);
+    },
 
-      state.draggedObject = null;
-      placedObjects.splice(i, 1);
-      placedObjects.push(nashParen);
-
-      state.placedObjects = placedObjects;
+    moveExistingEmployee(state, payload) {
+      state.placedEmployees = moveExistingObject(state, payload, state.placedEmployees);
     },
 
     addNewObjectToMap(state, {coords, type}) {
@@ -85,3 +69,24 @@ export default new Vuex.Store({
   },
   actions: {}
 })
+
+
+function moveExistingObject(state, {coords, id}, objectsStore) {
+  const i = _findIndex(objectsStore, {id});
+  if(i === -1) {
+    console.error(`не найден объект с id=${id}`, 'list:', objectsStore);
+    return false;
+  }
+  const placedObjects = [...objectsStore];
+  let [nashParen]= objectsStore.filter((obj) => id == obj.id);
+  nashParen = {
+    ...nashParen,
+    ...coords,
+  };
+
+  state.draggedObject = null;
+  placedObjects.splice(i, 1);
+  placedObjects.push(nashParen);
+
+  return placedObjects;
+};
