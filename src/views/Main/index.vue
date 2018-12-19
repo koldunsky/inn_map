@@ -5,6 +5,9 @@
     <label class="checkbox" >
       <input type="checkbox" v-model="showTile"> Показывать сетку
     </label>
+    <pre>
+      {{$store.state.placedObjects}}
+    </pre>
     <div class="floors">
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"

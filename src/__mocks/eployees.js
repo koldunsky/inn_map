@@ -14,7 +14,7 @@ function GetNewEmployee(name, occupation , isActive) {
     slack: 'slackDummy',
     slackLink: 'https://innovaco.slack.com/team/U5Q1H3KK6',
     isActive,
-    id
+    id,
   }
 }
 

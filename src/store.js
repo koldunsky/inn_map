@@ -39,7 +39,11 @@ export default new Vuex.Store({
     },
 
     moveExistingObject(state, {coords, id}) {
-      const i = _findIndex(state.employees, {id});
+      const i = _findIndex(state.placedObjects, {id});
+      if(i === -1) {
+        console.error(`ненайден объект с id=${id}`, 'list:', state.placedObjects);
+        return false;
+      }
       const placedObjects = [...state.placedObjects];
       let [nashParen]= state.placedObjects.filter((obj) => id == obj.id);
       nashParen = {
@@ -52,7 +56,6 @@ export default new Vuex.Store({
       placedObjects.push(nashParen);
 
       state.placedObjects = placedObjects;
-
     },
 
     addNewObjectToMap(state, {coords, type}) {
@@ -63,30 +66,6 @@ export default new Vuex.Store({
         id: `id_${Date.now()}`
       };
       state.placedObjects.push(obj);
-    },
-
-    selectEmployeeToPutInPlace(state, id) {
-      state.selectedEmployee = id;
-    },
-
-    clearSelectedEmployee(state) {
-      state.selectedEmployee = null;
-    },
-
-    putEmployeeInPlace(state, {x, y, floor}) {
-      const i = _findIndex(state.employees, {id: state.selectedEmployee});
-      const copyOfEmployees = [...state.employees];
-      const nashParen = {
-        ...state.employees[i],
-        coords: {
-          x,
-          y,
-          floor
-        }
-      };
-
-      copyOfEmployees.splice(i, 1, nashParen);
-      state.employees = copyOfEmployees;
     },
 
     highlightOccupation(state, name) {

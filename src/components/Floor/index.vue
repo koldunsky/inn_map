@@ -24,6 +24,7 @@
     <div class="objectsField">
       <Table
           v-for="o in thisFloorPlacedObjects"
+          :key="o.id"
           :id="o.id"
           :image="o.image"
           :type="o.type"

@@ -34,26 +34,30 @@ export default {
   },
   mounted() {
     this.$el.addEventListener('mousedown', this.onMouseDown);
-    this.$el.addEventListener('mouseup', this.onMouseUp);
     this.$el.ondragstart = function() {
       return false;
     };
   },
   methods: {
     onMouseDown(e) {
+      console.info('onMouseDown');
       const coords = this.getCoords();
       this.shiftX = e.clientX - coords.left;
       this.shiftY = e.clientY - coords.top;
       this.dragged = true;
       document.addEventListener('mousemove', this.moveAt);
-      console.warn('mousemove', 'added');
+      document.addEventListener('mouseup', this.onMouseUp, {
+        once: true,
+      });
     },
+
     moveAt(e) {
       this.innerX = e.clientX - this.shiftX;
       this.innerY = e.clientY - this.shiftY;
     },
 
     onMouseUp(e) {
+      console.warn('onMouseUp');
       this.dragged = false;
       document.removeEventListener('mousemove', this.moveAt);
 
