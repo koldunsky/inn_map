@@ -12,11 +12,13 @@
 
 .floor {
   position: relative;
+  top: 0;
   color: green;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   padding: 0 10rem;
+  transition: 2s ease top;
 }
 
 .inner {
@@ -110,4 +112,22 @@
   width: 5px;
   height: 5px;
   background: orange;
+}
+
+.collapsed {
+  &:nth-child(1) {
+    top: 0;
+  }
+  &:nth-child(2) {
+    top: -1010px;
+  }
+  &:nth-child(3) {
+    top: -2315px;
+  }
+  &:nth-child(4) {
+    top: -3579px;
+  }
+  &:nth-child(5) {
+    top: -4781px;
+  }
 }

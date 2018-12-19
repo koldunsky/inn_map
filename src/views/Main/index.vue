@@ -3,7 +3,7 @@
        :class="{'global_tile_on': showTile}"
   >
     <label class="checkbox" >
-      <input type="checkbox" v-model="showTile"> Показывать сетку
+      <input type="checkbox" v-model="showTile"> Схлопнуть домик
     </label>
     <pre>
       {{$store.state.placedObjects}}
@@ -12,7 +12,9 @@
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"
              :bg="bg"
-             :index="i"/>
+             :index="i"
+             :class="{'collapsed': showTile}"
+      />
     </div>
     <div class="controls">
       <InfoPanel />
