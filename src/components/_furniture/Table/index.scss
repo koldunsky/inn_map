@@ -1,13 +1,15 @@
-$size: 75px;
+@import '../../../global/style/utility/index';
+
+//$size: 75px;
 
 .table {
   display: block;
-  width: $size;
-  height: $size;
-  background-color: rgba(pink, .7);
-  background-image: url('../../../assets/furniture/table.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+  z-index: z(ontop);
+  //outline: 1px solid blue;
+}
+
+.image {
+  //@include stretch();
 }
 
 .vertical {

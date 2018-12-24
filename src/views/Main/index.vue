@@ -3,13 +3,19 @@
        :class="{'global_tile_on': showTile}"
   >
     <label class="checkbox" >
-      <input type="checkbox" v-model="showTile"> Показывать сетку
+      <input type="checkbox" v-model="showTile"> Схлопнуть домик
     </label>
+    <!--<pre style="position: fixed; text-align: left; background: rgba(0, 100, 100, .8); z-index: 500; color: white; padding: 20px">-->
+      <!--{{$store.state.placedObjects}}-->
+      <!--{{$store.state.employees}}-->
+    <!--</pre>-->
     <div class="floors">
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"
              :bg="bg"
-             :index="i"/>
+             :index="i"
+             :class="{'collapsed': showTile}"
+      />
     </div>
     <div class="controls">
       <InfoPanel />
@@ -21,13 +27,13 @@
 <script>
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
-  import ObjectsHolder from '../../components/ObjectsHolder/index';
+  import ObjectsHolder from '../../components/ObjectsPalette/index';
 
   export default {
     components: {
       Floor,
       InfoPanel,
-      ObjectsHolder,
+      ObjectsHolder
     },
     data() {
       return {

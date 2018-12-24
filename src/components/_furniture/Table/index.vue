@@ -1,35 +1,27 @@
 <template>
   <div
       class="table"
-      :class="{
-        vertical
+      :style="{
+        top,
+        left,
+        position,
+        zIndex
       }"
-      :style="styles"
   >
+    <img :src="image" alt="" class="image">
   </div>
 </template>
 
 <script>
-  import mapObject from '../../../componentMixins/mapObject';
+  import draggableObject from '../../../componentMixins/draggableObject';
 
   export default {
-    mixins: [mapObject],
+    mixins: [draggableObject],
     data() {
       return {
 
       }
     },
-    components: {
-    },
-    props: [
-      'vertical',
-    ],
-    computed: {
-      styles() {
-
-        return this.mapCssPosition;
-      }
-    }
   }
 </script>
 

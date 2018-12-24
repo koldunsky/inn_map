@@ -5,14 +5,19 @@
         'employee_highlight': employee.isHighlighted,
         'employee_active': employee.isActive
       }"
-      :style="styles"
+      :style="{
+        top: top,
+        left: left,
+        position: position
+      }"
   >
     <div class="card">
       <div
           class="photo"
-        :style="{
-        backgroundImage: `url(${require('../../assets/logo.png')})`,
-        }">
+          :style="{
+            backgroundImage: `url(${require('../../assets/logo.png')})`,
+          }"
+      >
       </div>
       <div class="name">{{employee.name}}</div>
       <div class="email"><a :href="`mailto:${employee.email}`">{{employee.email}}</a></div>
@@ -22,23 +27,18 @@
 </template>
 
 <script>
-  import mapObject from '../../componentMixins/mapObject';
+  import {mutations} from '../../store';
+  import draggableObject from '../../componentMixins/draggableObject';
 
   export default {
-    components: {},
+    mixins: [draggableObject],
     props: ['employee'],
-    mixins: [mapObject],
-    computed: {
-      styles() {
-        const {top, left} = this.mapCssPosition;
-
-        return {
-          width: '15px',
-          height: '15px',
-          backgroundColor: this.$store.state.occupations[this.employee.occupation].color,
-          top,
-          left
-        };
+    data() {
+      return {
+        mapMethods: {
+          place: mutations.addNewEmployeeToMap,
+          move: mutations.moveExistingEmployee
+        }
       }
     }
   }

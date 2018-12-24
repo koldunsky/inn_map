@@ -12,11 +12,13 @@
 
 .floor {
   position: relative;
-  color: green;
+  top: 0;
+  color: darkslategrey;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   padding: 0 10rem;
+  transition: 2s ease margin;
 }
 
 .inner {
@@ -27,36 +29,6 @@
 
 .background {
   width: 2000px;
-}
-
-.tile {
-  position: absolute;
-  font-size: .8rem;
-  color: rgba(blue, .2);
-  //border: 1px solid rgba(red, .5);
-  &:hover {
-    color: inherit;
-    outline: 1px solid red;
-  }
-  &::before,
-  &::after {
-    content: '';
-    border-radius: 5px;
-    display: block;
-    width: 5px;
-    height: 1px;
-    background: black;
-    //animation: pulse 1s infinite;
-    position: absolute;
-    top: 0;
-    left: -2px;
-  }
-  &:after {
-    top: -2px;
-    left: 0;
-    width: 1px;
-    height: 5px;
-  }
 }
 
 .employeesField {
@@ -79,19 +51,19 @@
   padding: 2rem 0;
 
   .floor:nth-child(1) & {
-    background: adjust-hue(#6A4E85, 180deg);
+    background: adjust-hue($innViolet, 180deg);
   }
   .floor:nth-child(2) & {
-    background: adjust-hue(#6A4E85, 135deg);
+    background: adjust-hue($innViolet, 135deg);
   }
   .floor:nth-child(3) & {
-    background: adjust-hue(#6A4E85, 90deg);
+    background: adjust-hue($innViolet, 90deg);
   }
   .floor:nth-child(4) & {
-    background: adjust-hue(#6A4E85, 45deg);
+    background: adjust-hue($innViolet, 45deg);
   }
   .floor:nth-child(5) & {
-    background: adjust-hue(#6A4E85, 0);
+    background: adjust-hue($innViolet, 0);
   }
 }
 
@@ -100,4 +72,29 @@
   position: absolute;
   position: sticky;
   top: 2rem;
+}
+
+.testObject {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: orange;
+}
+
+.collapsed {
+  &:nth-child(1) {
+    margin-top: 0;
+  }
+  &:nth-child(2) {
+    margin-top: -1010px;
+  }
+  &:nth-child(3) {
+    margin-top: -1304px;
+  }
+  &:nth-child(4) {
+    margin-top: -1255px;
+  }
+  &:nth-child(5) {
+    margin-top: -1205px;
+  }
 }
