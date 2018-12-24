@@ -18,7 +18,6 @@
       >
       </Table>
     </div>
-    {{thisFloorEmployees}}
     <div class="employeesField">
       <Employee
           v-for="empl in thisFloorEmployees"
