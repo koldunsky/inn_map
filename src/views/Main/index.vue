@@ -5,8 +5,9 @@
     <label class="checkbox" >
       <input type="checkbox" v-model="showTile"> Схлопнуть домик
     </label>
-    <pre>
+    <pre style="position: fixed; text-align: left; background: rgba(0, 100, 100, .8); z-index: 500; color: white; padding: 20px">
       {{$store.state.placedObjects}}
+      {{$store.state.employees}}
     </pre>
     <div class="floors">
       <Floor v-for="(bg, i) in backgrounds"

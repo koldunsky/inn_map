@@ -18,7 +18,7 @@
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   padding: 0 10rem;
-  transition: 2s ease top;
+  transition: 2s ease margin;
 }
 
 .inner {
@@ -31,45 +31,12 @@
   width: 2000px;
 }
 
-.tile {
-  position: absolute;
-  font-size: .8rem;
-  color: rgba(blue, .2);
-  //border: 1px solid rgba(red, .5);
-  &:hover {
-    color: inherit;
-    outline: 1px solid red;
-  }
-  &::before,
-  &::after {
-    content: '';
-    border-radius: 5px;
-    display: block;
-    width: 5px;
-    height: 1px;
-    background: black;
-    //animation: pulse 1s infinite;
-    position: absolute;
-    top: 0;
-    left: -2px;
-  }
-  &:after {
-    top: -2px;
-    left: 0;
-    width: 1px;
-    height: 5px;
-  }
-}
-
 .employeesField {
   @include objectField();
 }
 
 .objectsField {
-  position: absolute;
-  top: 0;
-  left: 0;
-  //@include objectField();
+  @include objectField();
 }
 
 .floorIndex {
@@ -116,18 +83,18 @@
 
 .collapsed {
   &:nth-child(1) {
-    top: 0;
+    margin-top: 0;
   }
   &:nth-child(2) {
-    top: -1010px;
+    margin-top: -1010px;
   }
   &:nth-child(3) {
-    top: -2315px;
+    margin-top: -1304px;
   }
   &:nth-child(4) {
-    top: -3579px;
+    margin-top: -1255px;
   }
   &:nth-child(5) {
-    top: -4781px;
+    margin-top: -1205px;
   }
 }

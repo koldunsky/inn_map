@@ -2,8 +2,8 @@
   <div
       class="table"
       :style="{
-        top: top,
-        left: left,
+        top,
+        left,
         position,
         zIndex
       }"

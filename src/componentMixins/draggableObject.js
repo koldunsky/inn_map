@@ -3,7 +3,7 @@ import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
 export default {
   props: {
     id: {
-      type: (String || Number),
+      type: String,
       default: null,
     },
     type: {
@@ -11,7 +11,7 @@ export default {
       type: String
     },
     image: {
-      required: true,
+      required: false,
       type: String
     },
     x: {
@@ -24,17 +24,21 @@ export default {
     }
   },
   data() {
-      return {
+    return {
       dragged: false,
       innerX: 0,
       innerY: 0,
       shiftX: null,
       shiftY: null,
+      mapMethods: {
+        place: 'addNewObjectToMap',
+        move: 'moveExistingObject'
+      }
     }
   },
   mounted() {
     this.$el.addEventListener('mousedown', this.onMouseDown);
-    this.$el.ondragstart = function() {
+    this.$el.ondragstart = function () {
       return false;
     };
   },
@@ -59,13 +63,14 @@ export default {
       this.dragged = false;
       document.removeEventListener('mousemove', this.moveAt);
 
-      if (this.id === null) {
-        this.$store.commit('addNewObjectToMap', {
+      if (!this.x || !this.y) {
+        this.$store.commit(this.mapMethods.place, {
           coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
           type: this.type,
+          id: this.id,
         });
       } else {
-        this.$store.commit('moveExistingObject', {
+        this.$store.commit(this.mapMethods.move, {
           coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
           id: this.id,
         });
@@ -73,7 +78,7 @@ export default {
 
     },
 
-    getCoords() {   // кроме IE8-
+    getCoords() {
       const box = this.$el.getBoundingClientRect();
       return {
         top: box.top,

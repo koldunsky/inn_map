@@ -7,14 +7,17 @@ function GetNewEmployee(name, occupation , isActive) {
 
   return {
     name,
-    coords: null,
+    type: 'employee',
+    x: 0,
+    y: 0,
+    floor: null,
     occupation,
     isHighlited: false,
     email: 'dummy@email.com',
     slack: 'slackDummy',
     slackLink: 'https://innovaco.slack.com/team/U5Q1H3KK6',
     isActive,
-    id,
+    id: id.toString(),
   }
 }
 

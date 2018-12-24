@@ -4,17 +4,6 @@
       :style="{'z-index': 5 - index}"
       :data-index="index"
   >
-    <div class="testObjects">
-      <div
-          v-for="o in thisFloorPlacedObjects"
-          class="testObject"
-          :style="{
-          top: o.top + 'px',
-          left: o.left + 'px'
-          }"
-      >
-      </div>
-    </div>
     <div class="floorIndex">
       <div class="floorIndex__number">
         {{5 - index}}
@@ -25,21 +14,17 @@
       <Table
           v-for="o in thisFloorPlacedObjects"
           :key="o.id"
-          :id="o.id"
-          :image="o.image"
-          :type="o.type"
-          :y="o.top"
-          :x="o.left"
+          v-bind="o"
       >
       </Table>
     </div>
+    {{thisFloorEmployees}}
     <div class="employeesField">
       <Employee
           v-for="empl in thisFloorEmployees"
-          :key="empl.name + empl.coords.x + empl.coords.y"
-          :coords="empl.coords"
+          v-bind="empl"
+          :key="empl.name + empl.id"
           :employee="empl"
-          :placeFn="$refs.TileField.coordsToBoundingClientRect"
       />
     </div>
   </div>
@@ -49,10 +34,7 @@
   import {mapState} from 'vuex'
 
   import Employee from '../Employee'
-  import TileField from '../TileField';
   import Table from '../_furniture/Table';
-
-  import {fieldHeight, fieldWidth} from '../../constants/app';
 
   export default {
     props: {
@@ -66,15 +48,19 @@
     },
     components: {
       Employee,
-      TileField,
-      Table
+      // eslint-disable-next-line
+      Table,
     },
 
     methods: {},
     computed: {
       ...mapState(['floors', 'fieldMeasure', 'employees', 'placedObjects']),
       thisFloorEmployees() {
-        return this.$store.state.employees.filter((empl) => empl.coords && empl.coords.floor === this.index);
+        return this.$store.state.employees.filter((empl) => {
+          if(empl.floor !== null) {
+          }
+          return (empl.x && empl.y) && parseInt(empl.floor, 10) === this.index;
+        });
       },
       thisFloorPlacedObjects() {
         return this.$store.state.placedObjects.filter(o => parseInt(o.floor, 10) === this.index);

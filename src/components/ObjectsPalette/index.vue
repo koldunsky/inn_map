@@ -7,16 +7,10 @@
           :key="empl.id"
       >
         <Employee
-            type="employee"
-            :image="require('../../assets/logo.png')"
+            v-bind="empl"
+            :key="empl.name + empl.id"
             :employee="empl"
-            :class="{
-          isSelected: selectedEmployee === empl.id,
-        }"
-            @click="$store.commit('selectEmployeeToPutInPlace', empl.id)"
-        >
-          {{empl.name}}
-        </Employee>
+        />
       </div>
     </div>
     <div class="furniture">
@@ -24,7 +18,7 @@
           v-for="furni in furniture"
           class="furni"
       >
-        <img :src="furni.image" class="bg" >
+        <img :src="furni.image" class="bg">
         <Table
             :image="furni.image"
             :type="furni.type"
@@ -36,7 +30,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import {mapState} from 'vuex'
   import Table from '../_furniture/Table';
   import Employee from '../Employee';
 
@@ -54,10 +48,8 @@
       ...mapState(['selectedEmployee', 'employees', 'furniture']),
       unplacedEmployees() {
         return this.$store.state.employees.filter((empl) =>
-          empl.coords === null ||
-          empl.coords.floor === undefined ||
-          empl.coords.x === undefined ||
-          empl.coords.y === undefined );
+          (empl.top === 0 && empl.left === 0) ||
+          empl.floor === null);
       },
     }
   }

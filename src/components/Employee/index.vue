@@ -27,11 +27,20 @@
 </template>
 
 <script>
+  import {mutations} from '../../store';
   import draggableObject from '../../componentMixins/draggableObject';
 
   export default {
     mixins: [draggableObject],
-    props: ['employee']
+    props: ['employee'],
+    data() {
+      return {
+        mapMethods: {
+          place: mutations.addNewEmployeeToMap,
+          move: mutations.moveExistingEmployee
+        }
+      }
+    }
   }
 </script>
 

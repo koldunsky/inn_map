@@ -2,8 +2,8 @@ export default (e, correction = {top: 0, left: 0}) => {
   const floors = document.querySelectorAll('.floor');
   let result = {
     floor: null,
-    top: null,
-    left: null
+    y: null,
+    x: null
   };
 
   floors.forEach((flr, i) => {
@@ -23,8 +23,8 @@ export default (e, correction = {top: 0, left: 0}) => {
 
       result = {
         floor: flr.dataset.index,
-        top: pageYOffset + e.clientY - realRect.top - correction.top,
-        left: pageXOffset + e.clientX - realRect.left - correction.left,
+        y: pageYOffset + e.clientY - realRect.top - correction.top,
+        x: pageXOffset + e.clientX - realRect.left - correction.left,
       };
 
       return true;
