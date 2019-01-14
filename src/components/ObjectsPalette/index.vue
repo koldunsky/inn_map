@@ -15,8 +15,9 @@
     </div>
     <div class="furniture">
       <div
-          v-for="furni in furniture"
+          v-for="(furni, i) in furniture"
           class="furni"
+          :key="i"
       >
         <img :src="furni.image" class="bg">
         <Table
@@ -36,6 +37,7 @@
 
   export default {
     components: {
+      // eslint-disable-next-line vue/no-unused-components
       Table,
       Employee
     },

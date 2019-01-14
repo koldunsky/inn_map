@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 import _each from 'lodash/each';
 import _findIndex from 'lodash/findIndex';
 
@@ -15,6 +16,7 @@ const objectMap = {
 };
 
 export const mutations = {
+  addUsers: 'addUsers',
   highlightOccupation: 'highlightOccupation',
 
   startDragObject: 'startDragObject',
@@ -24,6 +26,10 @@ export const mutations = {
 
   addNewEmployeeToMap: 'addNewEmployeeToMap',
   moveExistingEmployee: 'moveExistingEmployee',
+};
+
+export const actions = {
+  getEmployees: 'getEmployees'
 };
 
 export default new Vuex.Store({
@@ -37,6 +43,9 @@ export default new Vuex.Store({
     occupations,
   },
   mutations: {
+    [mutations.addUsers](state, employees) {
+      state.employees = employees;
+    },
     [mutations.highlightOccupation](state, name) {
       state.employees = state.employees.map((empl) => {
         return {
@@ -79,7 +88,23 @@ export default new Vuex.Store({
       state.employees = moveExistingObject(state, payload, state.employees);
     },
   },
-  actions: {}
+  actions: {
+    [actions.getEmployees]({commit}) {
+      const restApiUrl = 'http://townhall.test4game.com/api/seat/';
+      const url = __DEV__ ? 'http://0.0.0.0:8998/' + restApiUrl : restApiUrl;
+      console.info(__DEV__);
+
+      axios
+        .get(url)
+        .then((response) => {
+          console.info(response);
+          commit(mutations.addUsers, response.data);
+        })
+        .catch((error => {
+          console.error(`error in ${actions.getEmployees} action:`, error)
+        }))
+    }
+  }
 })
 
 

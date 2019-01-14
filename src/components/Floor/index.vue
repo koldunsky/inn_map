@@ -57,6 +57,7 @@
       thisFloorEmployees() {
         return this.$store.state.employees.filter((empl) => {
           if(empl.floor !== null) {
+            console.info('empl.floor !== null', empl.floor);
           }
           return (empl.x && empl.y) && parseInt(empl.floor, 10) === this.index;
         });
