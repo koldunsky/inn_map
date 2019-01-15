@@ -4,7 +4,7 @@ import axios from 'axios';
 import _each from 'lodash/each';
 import _findIndex from 'lodash/findIndex';
 
-import employees from './__mocks/eployees';
+// import employees from './__mocks/eployees';
 import furniture from './__mocks/furniture';
 import {occupations} from './constants/app';
 
@@ -16,7 +16,7 @@ const objectMap = {
 };
 
 export const mutations = {
-  addUsers: 'addUsers',
+  addEmpoyees: 'addEmpoyees',
   highlightOccupation: 'highlightOccupation',
 
   startDragObject: 'startDragObject',
@@ -34,7 +34,7 @@ export const actions = {
 
 export default new Vuex.Store({
   state: {
-    employees,
+    employees: [],
     furniture,
     placedObjects: [],
     draggedObject: null,
@@ -43,7 +43,17 @@ export default new Vuex.Store({
     occupations,
   },
   mutations: {
-    [mutations.addUsers](state, employees) {
+    [mutations.addEmpoyees](state, employees) {
+      console.info(employees);
+      employees = employees.map((empl) => ({
+        ...empl,
+        name: `${empl.person.first_name} ${empl.person.last_name}`,
+        type: 'employee',
+        isHighlited: false,
+        email: empl.person.email,
+        slack: 'slackDummy',
+        slackLink: 'https://innovaco.slack.com/team/U5Q1H3KK6',
+      }));
       state.employees = employees;
     },
     [mutations.highlightOccupation](state, name) {
@@ -92,13 +102,12 @@ export default new Vuex.Store({
     [actions.getEmployees]({commit}) {
       const restApiUrl = 'http://townhall.test4game.com/api/seat/';
       const url = __DEV__ ? 'http://0.0.0.0:8998/' + restApiUrl : restApiUrl;
-      console.info(__DEV__);
 
       axios
         .get(url)
         .then((response) => {
           console.info(response);
-          commit(mutations.addUsers, response.data);
+          commit(mutations.addEmpoyees, response.data);
         })
         .catch((error => {
           console.error(`error in ${actions.getEmployees} action:`, error)

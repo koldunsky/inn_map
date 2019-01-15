@@ -2,7 +2,7 @@ import { occupations } from '../constants/app';
 
 let id = 0;
 
-function GetNewEmployee(name, occupation , isActive) {
+export function GetNewEmployee(name, occupation , isActive) {
   id++;
 
   return {

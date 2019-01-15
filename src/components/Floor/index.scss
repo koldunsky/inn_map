@@ -14,11 +14,10 @@
   position: relative;
   top: 0;
   color: darkslategrey;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   padding: 0 10rem;
   transition: 2s ease margin;
+  user-select: none;
 }
 
 .inner {

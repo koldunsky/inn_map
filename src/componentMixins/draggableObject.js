@@ -3,7 +3,7 @@ import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
 export default {
   props: {
     id: {
-      type: String,
+      type: Number,
       default: null,
     },
     type: {
@@ -45,9 +45,11 @@ export default {
   methods: {
     onMouseDown(e) {
       const coords = this.getCoords();
+
       this.shiftX = e.clientX - coords.left;
       this.shiftY = e.clientY - coords.top;
       this.dragged = true;
+      this.moveAt(e);
       document.addEventListener('mousemove', this.moveAt);
       document.addEventListener('mouseup', this.onMouseUp, {
         once: true,
