@@ -6,7 +6,7 @@ export default (e, correction = {top: 0, left: 0}) => {
     x: null
   };
 
-  floors.forEach((flr, i) => {
+  floors.forEach((flr) => {
     const coordsFromTheTop = {
       left: e.clientX + pageXOffset,
       top: e.clientY + pageYOffset,
@@ -22,7 +22,7 @@ export default (e, correction = {top: 0, left: 0}) => {
     if (coordsFromTheTop.top > realRect.top && coordsFromTheTop.top < realRect.top + realRect.height) {
 
       result = {
-        floor: flr.dataset.index,
+        floor: parseInt(flr.dataset.index, 10),
         y: pageYOffset + e.clientY - realRect.top - correction.top,
         x: pageXOffset + e.clientX - realRect.left - correction.left,
       };

@@ -1,4 +1,6 @@
 import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
+import axios from 'axios';
+import {changeCoords} from '../constants/api';
 
 export default {
   props: {
@@ -41,6 +43,14 @@ export default {
     this.$el.ondragstart = function () {
       return false;
     };
+
+    if (__DEV__) {
+      // axios.put(changeCoords(2), {
+      //   floor: null,
+      //   longitude: null,
+      //   latitude: null
+      // })
+    }
   },
   methods: {
     onMouseDown(e) {
@@ -65,19 +75,33 @@ export default {
       this.dragged = false;
       document.removeEventListener('mousemove', this.moveAt);
 
-      if (!this.x || !this.y) {
+      const coords = mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX});
+
+      axios.put(changeCoords(this.id), {
+        floor: coords.floor,
+        longitude: coords.y,
+        latitude: coords.x
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      if (!this.x
+        || !this.y) {
         this.$store.commit(this.mapMethods.place, {
-          coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
+          coords,
           type: this.type,
           id: this.id,
         });
       } else {
         this.$store.commit(this.mapMethods.move, {
-          coords: mouseCoordsToFloorCoords(e, {top: this.shiftY, left: this.shiftX}),
+          coords,
           id: this.id,
         });
       }
-
     },
 
     getCoords() {
@@ -88,6 +112,7 @@ export default {
       };
     }
   },
+
   computed: {
     top() {
       const amount = this.dragged ? this.innerY : this.y;

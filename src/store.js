@@ -4,7 +4,8 @@ import axios from 'axios';
 import _each from 'lodash/each';
 import _findIndex from 'lodash/findIndex';
 
-// import employees from './__mocks/eployees';
+import {getEmployeesUrl} from './constants/api';
+
 import furniture from './__mocks/furniture';
 import {occupations} from './constants/app';
 
@@ -44,7 +45,6 @@ export default new Vuex.Store({
   },
   mutations: {
     [mutations.addEmpoyees](state, employees) {
-      console.info(employees);
       employees = employees.map((empl) => ({
         ...empl,
         name: `${empl.person.first_name} ${empl.person.last_name}`,
@@ -76,7 +76,6 @@ export default new Vuex.Store({
     },
 
     [mutations.addNewObjectToMap](state, {coords, type}) {
-      console.info(coords);
       state.draggedObject = null;
       const obj = {
         ...objectMap[type],
@@ -100,14 +99,15 @@ export default new Vuex.Store({
   },
   actions: {
     [actions.getEmployees]({commit}) {
-      const restApiUrl = 'http://townhall.test4game.com/api/seat/';
-      const url = __DEV__ ? 'http://0.0.0.0:8998/' + restApiUrl : restApiUrl;
-
       axios
-        .get(url)
+        .get(getEmployeesUrl)
         .then((response) => {
-          console.info(response);
-          commit(mutations.addEmpoyees, response.data);
+          const transformedResponse = response.data.map((empl) => ({
+            ...empl,
+            x: parseInt(empl.latitude, 10),
+            y: parseInt(empl.longitude, 10)
+          }));
+          commit(mutations.addEmpoyees, transformedResponse);
         })
         .catch((error => {
           console.error(`error in ${actions.getEmployees} action:`, error)

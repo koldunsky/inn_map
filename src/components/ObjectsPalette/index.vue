@@ -50,7 +50,7 @@
       ...mapState(['selectedEmployee', 'employees', 'furniture']),
       unplacedEmployees() {
         return this.$store.state.employees.filter((empl) =>
-          (empl.top === 0 && empl.left === 0) ||
+          !empl.x || !empl.y ||
           empl.floor === null);
       },
     }
