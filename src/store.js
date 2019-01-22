@@ -27,6 +27,9 @@ export const mutations = {
 
   addNewEmployeeToMap: 'addNewEmployeeToMap',
   moveExistingEmployee: 'moveExistingEmployee',
+
+  setObjectToFind: 'setObjectToFind',
+  clearObjectToFind: 'clearObjectToFind'
 };
 
 export const actions = {
@@ -35,6 +38,7 @@ export const actions = {
 
 export default new Vuex.Store({
   state: {
+    objectToFind: null,
     employees: [],
     furniture,
     placedObjects: [],
@@ -69,6 +73,13 @@ export default new Vuex.Store({
           isHighlighted: name === occ.name
         };
       });
+    },
+
+    [mutations.setObjectToFind](state, object) {
+      state.objectToFind = object;
+    },
+    [mutations.clearObjectToFind](state, object) {
+
     },
 
     [mutations.startDragObject](state, object) {

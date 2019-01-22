@@ -1,0 +1,19 @@
+@import '../../global/style/utility/index';
+
+.search {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 4;
+}
+
+.search-input {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 2px solid blue;
+  outline: none;
+
+  &:focus {
+    border-color: orangered;
+  }
+}

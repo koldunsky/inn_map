@@ -6,10 +6,11 @@
 
 <script>
   export default {
-    components: {
+    data() {
+      return {};
     },
-    props: {
-    }
+    components: {},
+    props: {}
   }
 </script>
 

@@ -2,6 +2,7 @@
   <div class="main"
        :class="{'global_tile_on': showTile}"
   >
+    <Search />
     <label class="checkbox" >
       <input type="checkbox" v-model="showTile"> Схлопнуть домик
     </label>
@@ -25,12 +26,14 @@
 </template>
 
 <script>
+  import Search from '../../components/Search/index';
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
   import ObjectsHolder from '../../components/ObjectsPalette/index';
 
   export default {
     components: {
+      Search,
       Floor,
       InfoPanel,
       ObjectsHolder

@@ -45,11 +45,11 @@ export default {
     };
 
     if (__DEV__) {
-      // axios.put(changeCoords(2), {
-      //   floor: null,
-      //   longitude: null,
-      //   latitude: null
-      // })
+      console.info('puuuut');
+      axios.put(changeCoords(2), {
+        first_name: 'Руслан',
+        last_name: 'Колдунский'
+      })
     }
   },
   methods: {
