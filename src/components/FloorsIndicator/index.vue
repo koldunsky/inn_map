@@ -22,6 +22,13 @@
     },
     mounted() {
       this.floors = Array.prototype.slice.call(document.querySelectorAll('.floor'));
+      this.updateImitator();
+      window.addEventListener('resize', this.updateImitator);
+    },
+    methods: {
+      updateImitator() {
+        console.info('updateImitator');
+      }
     },
     components: {},
     props: {}
