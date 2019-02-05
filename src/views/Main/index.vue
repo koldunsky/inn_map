@@ -2,15 +2,15 @@
   <div class="main"
        :class="{'global_tile_on': showTile}"
   >
-    <Search />
-    <label class="checkbox" >
+    <Search/>
+    <label class="checkbox">
       <input type="checkbox" v-model="showTile"> Схлопнуть домик
     </label>
     <!--<pre style="position: fixed; text-align: left; background: rgba(0, 100, 100, .8); z-index: 500; color: white; padding: 20px">-->
-      <!--{{$store.state.placedObjects}}-->
-      <!--{{$store.state.employees}}-->
+    <!--{{$store.state.placedObjects}}-->
+    <!--{{$store.state.employees}}-->
     <!--</pre>-->
-    <div class="floors">
+    <div class="floors" ref="floors">
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"
              :bg="bg"
@@ -18,9 +18,10 @@
              :class="{'collapsed': showTile}"
       />
     </div>
+    <FloorsIndicator />
     <div class="controls">
-      <InfoPanel />
-      <ObjectsHolder />
+      <InfoPanel/>
+      <ObjectsHolder/>
     </div>
   </div>
 </template>
@@ -29,14 +30,16 @@
   import Search from '../../components/Search/index';
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
-  import ObjectsHolder from '../../components/ObjectsPalette/index';
+  import ObjectsHolder from '../../components/ObjectsPalette';
+  import FloorsIndicator from '../../components/FloorsIndicator';
 
   export default {
     components: {
       Search,
       Floor,
       InfoPanel,
-      ObjectsHolder
+      ObjectsHolder,
+      FloorsIndicator
     },
     data() {
       return {
@@ -53,7 +56,37 @@
     mounted() {
       document.addEventListener('click', (e) => {
         e.target
-      })
+      });
+
+      this.addFloorsDragListener();
+    },
+    methods: {
+      addFloorsDragListener() {
+        this.$refs.floors.ondragstart = function() {
+          return false;
+        };
+        this.$refs.floors.addEventListener('mousedown', this.handleFloorsDrag);
+      },
+
+      handleFloorsDrag(e) {
+        const el = this.$refs.floors;
+        let shiftX = e.pageX + el.scrollLeft;
+        let shiftY = e.pageY + el.scrollTop;
+        const moveAt = (e) => {
+          const top = (e.pageY - shiftY) * -1;
+          const left = (e.pageX - shiftX) * -1;
+          el.scrollTo(left, top);
+        };
+
+        moveAt(e);
+        document.addEventListener('mousemove', moveAt);
+
+        this.$refs.floors.addEventListener('mouseup', () => {
+          document.removeEventListener('mousemove', moveAt);
+        }, {
+          once: true
+        });
+      },
     }
   }
 </script>

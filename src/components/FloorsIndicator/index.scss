@@ -1,0 +1,27 @@
+@import '../../global/style/utility/index';
+
+.floorsIndicator {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.floorIndicator {
+  flex-grow: 1;
+  border: 1px solid cyan;
+  background: rgba(cyan, .2);
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.viewportImitator {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+}

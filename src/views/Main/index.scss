@@ -3,6 +3,8 @@
 .floors {
   position: relative;
   z-index: z(floors);
+  overflow: auto;
+  height: 100vh;
 }
 
 .controls {

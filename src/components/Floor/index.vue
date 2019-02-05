@@ -4,11 +4,6 @@
       :style="{'z-index': 5 - index}"
       :data-index="index"
   >
-    <div class="floorIndex">
-      <div class="floorIndex__number">
-        {{5 - index}}
-      </div>
-    </div>
     <img class="background" :src="bg">
     <div class="objectsField">
       <Table
