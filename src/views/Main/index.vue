@@ -45,11 +45,11 @@
       return {
         showTile: false,
         backgrounds: [
-          require('../../assets/floors/5th-floor.png'),
-          require('../../assets/floors/4th-floor.png'),
-          require('../../assets/floors/3rd-floor.png'),
-          require('../../assets/floors/2nd-floor.png'),
-          require('../../assets/floors/1st-floor.png'),
+          // require('../../assets/floors/5th-floor.png'),
+          // require('../../assets/floors/4th-floor.png'),
+          require('../../assets/floors/new/3rd_floor_no_walls_kept_shadows.png'),
+          require('../../assets/floors/new/2nd_floor_no_walls_kept_shadows.png'),
+          require('../../assets/floors/new/1_floor_no_walls_kept_shadows.png'),
         ]
       }
     },
@@ -69,6 +69,9 @@
       },
 
       handleFloorsDrag(e) {
+        if (!e.target.classList.contains('background')) {
+          return false;
+        }
         const el = this.$refs.floors;
         let shiftX = e.pageX + el.scrollLeft;
         let shiftY = e.pageY + el.scrollTop;
@@ -81,6 +84,11 @@
         moveAt(e);
         document.addEventListener('mousemove', moveAt);
 
+        document.addEventListener('mouseout',() => {
+          document.removeEventListener('mousemove', moveAt);
+        }, {
+          once: true
+        });
         this.$refs.floors.addEventListener('mouseup', () => {
           document.removeEventListener('mousemove', moveAt);
         }, {

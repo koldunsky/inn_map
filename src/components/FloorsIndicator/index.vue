@@ -2,10 +2,13 @@
   <div class="floorsIndicator">
     <button
         v-for="(floor, i) in floors"
+        :key="i"
         class="floorIndicator"
         @click="() => {floor.scrollIntoView({block: 'center', behavior: 'smooth'})}"
+        :style="{'flexGrow': floor.innerHeight}"
     >
       {{floors.length - i}}
+      {{floor.outerHeight}}
     </button>
     <div
         class="viewportImitator"
@@ -42,8 +45,6 @@
 
         viewportImitator.style.height = viewPortHeight / fullScroll * 100 + '%';
         viewportImitator.style.top = scrollPosition / fullScroll * 100 + '%';
-
-
 
         console.info(fullScroll, viewPortHeight, scrollPosition);
       }

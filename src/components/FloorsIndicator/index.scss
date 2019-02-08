@@ -18,6 +18,8 @@
   background: rgba(cyan, .2);
   cursor: pointer;
   font-size: 25px;
+  user-select: none;
+  outline: none;
 }
 
 .viewportImitator {
