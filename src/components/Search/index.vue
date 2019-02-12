@@ -64,6 +64,7 @@
 
       onSelected(item) {
         console.info('onSelected', item);
+
         this.$store.commit(mutations.setObjectToFind, item);
         this.selected = item;
       },

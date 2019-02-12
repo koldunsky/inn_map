@@ -47,9 +47,9 @@
         backgrounds: [
           // require('../../assets/floors/5th-floor.png'),
           // require('../../assets/floors/4th-floor.png'),
-          require('../../assets/floors/new/3rd_floor_no_walls_kept_shadows.png'),
-          require('../../assets/floors/new/2nd_floor_no_walls_kept_shadows.png'),
-          require('../../assets/floors/new/1_floor_no_walls_kept_shadows.png'),
+          require('../../assets/floors/new/3_rd.png'),
+          require('../../assets/floors/new/2_nd.png'),
+          require('../../assets/floors/new/1_st.png'),
         ]
       }
     },
