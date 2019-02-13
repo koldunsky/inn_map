@@ -44,13 +44,13 @@ export default {
       return false;
     };
 
-    if (__DEV__) {
-      console.info('puuuut');
-      axios.put(changeCoords(2), {
-        first_name: 'Руслан',
-        last_name: 'Колдунский'
-      })
-    }
+    // if (__DEV__) {
+    //   console.info('puuuut');
+    //   axios.put(changeCoords(2), {
+    //     first_name: 'Руслан',
+    //     last_name: 'Колдунский'
+    //   })
+    // }
   },
   methods: {
     onMouseDown(e) {

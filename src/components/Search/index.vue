@@ -46,6 +46,7 @@
         // Full customizability over filtering
         const filteredData = this.$store.state.employees.filter(empl => {
           if(text === '') {
+            this.$store.commit(mutations.clearObjectToFind);
             return false;
           }
           const [email] = empl.email.split('@');
@@ -62,9 +63,6 @@
       },
 
       onSelected(item) {
-        this.scrollToSelected(`employee_${item.item.id}`);
-        console.info('onSelected', item);
-
         this.$store.commit(mutations.setObjectToFind, item);
         this.selected = item;
       },
@@ -106,17 +104,6 @@
       focusMe(e) {
         console.log(e)
       },
-
-      scrollToSelected(id) {
-        const el = document.getElementById(id);
-        const floors = document.getElementById(id);
-        const rect = el.getBoundingClientRect();
-        window.scrollTo({
-
-        });
-        el.scrollIntoView();
-        console.info(el);
-      }
     }
   };
 </script>

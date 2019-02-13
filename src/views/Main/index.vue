@@ -10,9 +10,6 @@
     <!--{{$store.state.placedObjects}}-->
     <!--{{$store.state.employees}}-->
     <!--</pre>-->
-    <pre>
-      {{objectToFind}}
-    </pre>
     <div class="floors" ref="floors">
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"
@@ -36,6 +33,7 @@
   import InfoPanel from '../../components/InfoPanel/index';
   import ObjectsHolder from '../../components/ObjectsPalette';
   import FloorsIndicator from '../../components/FloorsIndicator';
+  import { mutations } from '../../store';
 
   export default {
     components: {
@@ -63,6 +61,27 @@
       });
 
       this.addFloorsDragListener();
+
+      this.$store.subscribe((mutation) => {
+        if (mutation.type === mutations.setObjectToFind) {
+          const { floors } = this.$refs;
+          const { id } = mutation.payload.item;
+          const el = document.getElementById(`employee_${id}`);
+          const elRect = el.getBoundingClientRect();
+          const floorsRect = floors.getBoundingClientRect();
+          // const
+          const toTop = elRect.top - floorsRect.top - window.innerHeight / 2 + floors.scrollTop;
+          const toLeft = elRect.left - floorsRect.left - window.innerWidth / 2 + floors.scrollLeft;
+          console.info(toTop, toLeft);
+          floors.scrollTo({
+            top: toTop,
+            left: toLeft,
+            behavior: 'smooth'
+          });
+          console.log(floorsRect);
+          console.log(el.getBoundingClientRect());
+        }
+      });
 
       this.$store.watch(
         (state, getters) => {

@@ -3,8 +3,7 @@
       :id="`employee_${employee.id}`"
       class="employee"
       :class="{
-        'employee_highlight': employee.isHighlighted,
-        'employee_active': employee.isActive
+        'employee_highlight': employee.isHighlighted
       }"
       :style="{
         top: top,

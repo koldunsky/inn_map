@@ -77,9 +77,24 @@ export default new Vuex.Store({
 
     [mutations.setObjectToFind](state, object) {
       state.objectToFind = object;
-    },
-    [mutations.clearObjectToFind](state, object) {
 
+      state.employees = state.employees.map((empl) => {
+        return {
+          ...empl,
+          isHighlighted: object.item.id === empl.id
+        }
+      });
+    },
+
+    [mutations.clearObjectToFind](state) {
+      state.objectToFind = null;
+
+      state.employees = state.employees.map((empl) => {
+        return {
+          ...empl,
+          isHighlighted: false
+        }
+      });
     },
 
     [mutations.startDragObject](state, object) {
