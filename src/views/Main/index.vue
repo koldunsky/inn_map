@@ -10,6 +10,9 @@
     <!--{{$store.state.placedObjects}}-->
     <!--{{$store.state.employees}}-->
     <!--</pre>-->
+    <pre>
+      {{objectToFind}}
+    </pre>
     <div class="floors" ref="floors">
       <Floor v-for="(bg, i) in backgrounds"
              :key="bg"
@@ -27,6 +30,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import Search from '../../components/Search/index';
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
@@ -45,8 +49,8 @@
       return {
         showTile: false,
         backgrounds: [
-          // require('../../assets/floors/5th-floor.png'),
-          // require('../../assets/floors/4th-floor.png'),
+          require('../../assets/floors/new/3_rd.png'),
+          require('../../assets/floors/new/3_rd.png'),
           require('../../assets/floors/new/3_rd.png'),
           require('../../assets/floors/new/2_nd.png'),
           require('../../assets/floors/new/1_st.png'),
@@ -59,7 +63,18 @@
       });
 
       this.addFloorsDragListener();
+
+      this.$store.watch(
+        (state, getters) => {
+          console.info(state, getters);
+          return getters.objectToFind
+        },
+        (newValue, oldValue) => {
+          console.log(`Updating from ${oldValue} to ${newValue}`);
+        },
+      );
     },
+    computed: mapState(['objectToFind']),
     methods: {
       addFloorsDragListener() {
         this.$refs.floors.ondragstart = function() {

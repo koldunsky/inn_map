@@ -1,5 +1,6 @@
 <template>
   <div
+      :id="`employee_${employee.id}`"
       class="employee"
       :class="{
         'employee_highlight': employee.isHighlighted,

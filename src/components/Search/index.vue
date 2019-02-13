@@ -9,7 +9,6 @@
         :render-suggestion="renderSuggestion"
         :get-suggestion-value="getSuggestionValue"
         :input-props="{class: 'search-input', onInputChange: this.onInputChange, placeholder:'Do you feel lucky, punk?'}"/>
-    {{$store.state.objectToFind}}
   </div>
 </template>
 
@@ -63,6 +62,7 @@
       },
 
       onSelected(item) {
+        this.scrollToSelected(`employee_${item.item.id}`);
         console.info('onSelected', item);
 
         this.$store.commit(mutations.setObjectToFind, item);
@@ -105,6 +105,17 @@
       },
       focusMe(e) {
         console.log(e)
+      },
+
+      scrollToSelected(id) {
+        const el = document.getElementById(id);
+        const floors = document.getElementById(id);
+        const rect = el.getBoundingClientRect();
+        window.scrollTo({
+
+        });
+        el.scrollIntoView();
+        console.info(el);
       }
     }
   };
