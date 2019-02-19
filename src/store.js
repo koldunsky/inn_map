@@ -55,7 +55,7 @@ export default new Vuex.Store({
         type: 'employee',
         isHighlited: false,
         email: empl.person.email,
-        slack: 'slackDummy',
+        slack: 'slack',
         slackLink: 'https://innovaco.slack.com/team/U5Q1H3KK6',
       }));
       state.employees = employees;

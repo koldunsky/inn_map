@@ -3,6 +3,6 @@
 .background {
   @include absoluteStretch();
 
-  background: #111;
+  background: $innDarkBlue;
   z-index: z('background');
 }

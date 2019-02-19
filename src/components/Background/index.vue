@@ -28,7 +28,7 @@
         const context = canvas.getContext('2d');
         const w = canvas.offsetWidth;
         const h = canvas.offsetHeight;
-        const stars = w * h / 3000;
+        const stars = w * h / 5000;
         const colorRange = [0, 60, 240];
 
         for (let i = 0; i < stars; i++) {
