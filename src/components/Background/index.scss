@@ -1,0 +1,8 @@
+@import '../../global/style/utility/index';
+
+.background {
+  @include absoluteStretch();
+
+  background: #111;
+  z-index: z('background');
+}

@@ -1,19 +1,41 @@
 @import '../../global/style/utility/index';
 
+$pad: 20px;
+
 .search {
   position: fixed;
   top: 20px;
-  left: 20px;
-  z-index: 4;
+  right: 20px;
+  z-index: z('search');
+  width: 300px;
+  font-size: 1.5rem;
+  font-family: $fontFamily;
 }
 
 .search-input {
-  padding: 10px 20px;
+  font-size: inherit;
+  font-family: inherit;
+  width: 100%;
+  padding: $pad/2 $pad;
   border-radius: 4px;
-  border: 2px solid blue;
+  border: 2px solid $mono-black200;
   outline: none;
 
   &:focus {
-    border-color: orangered;
+    border-color: $innYellow;
   }
+}
+
+.search__suggestion-item {
+  background: white;
+  padding: $pad/2 $pad;
+  width: 100%;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+}
+
+.autosuggest__results-container {
+  width: 100%;
+  border: 1px solid rgba(black, .2);
 }

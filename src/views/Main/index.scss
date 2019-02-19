@@ -7,6 +7,13 @@
   height: 100vh;
 }
 
+
+.floors-inner {
+  width: $layerWidth;
+  position: relative;
+  background: #111;
+}
+
 .controls {
   position: fixed;
   width: 100%;

@@ -27,8 +27,9 @@
 <script>
   import {mapState} from 'vuex'
 
-  import Employee from '../Employee'
+  import Employee from '../Employee';
   import Table from '../_furniture/Table';
+  import Background from '../Background';
 
   export default {
     props: {
@@ -43,6 +44,8 @@
     components: {
       Employee,
       // eslint-disable-next-line
+      Background,
+      // eslint-disable-next-line
       Table,
     },
 
@@ -51,9 +54,6 @@
       ...mapState(['floors', 'fieldMeasure', 'employees', 'placedObjects']),
       thisFloorEmployees() {
         return this.$store.state.employees.filter((empl) => {
-          if(empl.floor !== null) {
-            console.info('empl.floor !== null', empl.floor);
-          }
           return (empl.x && empl.y) && parseInt(empl.floor, 10) === this.index;
         });
       },

@@ -14,10 +14,10 @@
   position: relative;
   top: 0;
   color: darkslategrey;
-  box-sizing: content-box;
-  padding: 0 10rem;
+  box-sizing: border-box;
   transition: 2s ease margin;
   user-select: none;
+  width: $layerWidth;
 }
 
 .inner {
@@ -27,15 +27,19 @@
 }
 
 .background {
-  width: 2000px;
+  width: $layerWidth;
 }
 
 .employeesField {
   @include objectField();
+
+  z-index: z('employees');
 }
 
 .objectsField {
   @include objectField();
+
+  z-index: z('furniture');
 }
 
 .floorIndex {

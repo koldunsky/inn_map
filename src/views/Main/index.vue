@@ -2,21 +2,30 @@
   <div class="main"
        :class="{'global_tile_on': showTile}"
   >
-    <Search/>
-    <label class="checkbox">
-      <input type="checkbox" v-model="showTile"> Схлопнуть домик
-    </label>
+    <Search />
+    <!--<label class="checkbox">-->
+      <!--<input type="checkbox" v-model="showTile"> Схлопнуть домик-->
+    <!--</label>-->
     <!--<pre style="position: fixed; text-align: left; background: rgba(0, 100, 100, .8); z-index: 500; color: white; padding: 20px">-->
     <!--{{$store.state.placedObjects}}-->
     <!--{{$store.state.employees}}-->
     <!--</pre>-->
     <div class="floors" ref="floors">
-      <Floor v-for="(bg, i) in backgrounds"
-             :key="bg"
-             :bg="bg"
-             :index="i"
-             :class="{'collapsed': showTile}"
-      />
+      <div
+          class="floors-inner"
+          ref="inner"
+      >
+        <Background
+            :width="layerSize.width"
+            :height="layerSize.height"
+        />
+        <Floor v-for="(bg, i) in backgrounds"
+               :key="bg + i"
+               :bg="bg"
+               :index="i"
+               :class="{'collapsed': showTile}"
+        />
+      </div>
     </div>
     <FloorsIndicator />
     <div class="controls">
@@ -27,12 +36,14 @@
 </template>
 
 <script>
+  import _debounce from 'lodash/debounce';
   import { mapState } from 'vuex';
   import Search from '../../components/Search/index';
   import Floor from '../../components/Floor/index';
   import InfoPanel from '../../components/InfoPanel/index';
   import ObjectsHolder from '../../components/ObjectsPalette';
   import FloorsIndicator from '../../components/FloorsIndicator';
+  import Background from '../../components/Background';
   import { mutations } from '../../store';
 
   export default {
@@ -41,7 +52,8 @@
       Floor,
       InfoPanel,
       ObjectsHolder,
-      FloorsIndicator
+      FloorsIndicator,
+      Background
     },
     data() {
       return {
@@ -52,7 +64,11 @@
           require('../../assets/floors/new/3_rd.png'),
           require('../../assets/floors/new/2_nd.png'),
           require('../../assets/floors/new/1_st.png'),
-        ]
+        ],
+        layerSize: {
+          width: 0,
+          height: 0
+        }
       }
     },
     mounted() {
@@ -61,6 +77,9 @@
       });
 
       this.addFloorsDragListener();
+      this.updateLayerSize();
+      window.addEventListener('resize', _debounce(this.updateLayerSize, 100));
+      window.addEventListener('load',this.updateLayerSize);
 
       this.$store.subscribe((mutation) => {
         if (mutation.type === mutations.setObjectToFind) {
@@ -72,14 +91,11 @@
           // const
           const toTop = elRect.top - floorsRect.top - window.innerHeight / 2 + floors.scrollTop;
           const toLeft = elRect.left - floorsRect.left - window.innerWidth / 2 + floors.scrollLeft;
-          console.info(toTop, toLeft);
           floors.scrollTo({
             top: toTop,
             left: toLeft,
             behavior: 'smooth'
           });
-          console.log(floorsRect);
-          console.log(el.getBoundingClientRect());
         }
       });
 
@@ -93,8 +109,18 @@
         },
       );
     },
-    computed: mapState(['objectToFind']),
+
+    computed: {
+      ...mapState(['objectToFind']),
+    },
     methods: {
+      updateLayerSize() {
+        this.layerSize = {
+          width: this.$refs.inner.offsetWidth,
+          height: this.$refs.inner.offsetHeight
+        }
+      },
+
       addFloorsDragListener() {
         this.$refs.floors.ondragstart = function() {
           return false;

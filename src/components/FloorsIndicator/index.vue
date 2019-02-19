@@ -45,8 +45,6 @@
 
         viewportImitator.style.height = viewPortHeight / fullScroll * 100 + '%';
         viewportImitator.style.top = scrollPosition / fullScroll * 100 + '%';
-
-        // console.info(fullScroll, viewPortHeight, scrollPosition);
       }
     },
     components: {},

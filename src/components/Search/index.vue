@@ -6,9 +6,11 @@
         @blur="onBlur"
         @click="clickHandler"
         @selected="onSelected"
-        :render-suggestion="renderSuggestion"
-        :get-suggestion-value="getSuggestionValue"
-        :input-props="{class: 'search-input', onInputChange: this.onInputChange, placeholder:'Do you feel lucky, punk?'}"/>
+        :input-props="{class: 'search-input', onInputChange: this.onInputChange, placeholder:'Enter employee name'}">
+      <template slot-scope="{suggestion}">
+        <span class="search__suggestion-item">{{suggestion.item.email}}</span>
+      </template>
+    </vue-autosuggest>
   </div>
 </template>
 
@@ -45,6 +47,7 @@
 
         // Full customizability over filtering
         const filteredData = this.$store.state.employees.filter(empl => {
+          console.info(empl);
           if(text === '') {
             this.$store.commit(mutations.clearObjectToFind);
             return false;
@@ -65,41 +68,6 @@
       onSelected(item) {
         this.$store.commit(mutations.setObjectToFind, item);
         this.selected = item;
-      },
-      /**
-       * renderSuggestion will override the default suggestion template slot.
-       */
-      renderSuggestion(suggestion) {
-        /* You will need babel-plugin-transform-vue-jsx for this kind of syntax for
-         * rendering. If you don't use babel or the jsx transform, then you can create
-         * the you can create the virtual node yourself using this.$createElement.
-         */
-        const character = suggestion.item;
-        return (
-          <div
-            style={{
-              display: "flex",
-            alignItems: "center"
-          }}
-      >
-      <img
-        style={{
-          width: "25px",
-            height: "25px",
-            borderRadius: "15px",
-            marginRight: "10px"
-        }}
-        src={character.avatar}
-        />{" "}
-        <span style={{ color: "navyblue" }}>{character.name}</span>
-        </div>
-      );
-      },
-      /**
-       * This is what the <input/> value is set to when you are selecting a suggestion.
-       */
-      getSuggestionValue(suggestion) {
-        return suggestion.item.name;
       },
       focusMe(e) {
         console.log(e)
