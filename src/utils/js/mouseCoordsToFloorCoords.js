@@ -23,8 +23,8 @@ export default (e, correction = {top: 0, left: 0}) => {
 
       result = {
         floor: parseInt(flr.dataset.index, 10),
-        y: pageYOffset + e.clientY - realRect.top - correction.top,
-        x: pageXOffset + e.clientX - realRect.left - correction.left,
+        y: Math.floor(pageYOffset + e.clientY - realRect.top - correction.top),
+        x: Math.floor(pageXOffset + e.clientX - realRect.left - correction.left),
       };
 
       return true;
