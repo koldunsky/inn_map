@@ -59,8 +59,8 @@
       return {
         showTile: false,
         backgrounds: [
-          require('../../assets/floors/new/3_rd.png'),
-          require('../../assets/floors/new/3_rd.png'),
+          require('../../assets/floors/new/5.png'),
+          require('../../assets/floors/new/4th_floor.png'),
           require('../../assets/floors/new/3_rd.png'),
           require('../../assets/floors/new/2_nd.png'),
           require('../../assets/floors/new/1_st.png'),
