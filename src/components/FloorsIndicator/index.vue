@@ -1,30 +1,44 @@
 <template>
   <div class="floorsIndicator">
+    <pre style="color: cyan">
+
+    </pre>
     <button
         v-for="(floor, i) in floors"
         :key="i"
-        class="floorIndicator"
+        :class="{
+          'floorIndicator': true,
+          'floorIndicator_higher': i < floorsPosition.current,
+          'floorIndicator_higherActive': i === floorsPosition.fromTop,
+          'floorIndicator_active': i === floorsPosition.current,
+          'floorIndicator_lowerActive': i === floorsPosition.fromBottom,
+          'floorIndicator_lower': i > floorsPosition.current,
+        }"
         @click="() => {floor.scrollIntoView({block: 'center', behavior: 'smooth'})}"
         :style="{'flexGrow': floor.innerHeight}"
     >
+      <span class="floorIndicatorText">
       {{floors.length - i}}
-      {{floor.outerHeight}}
+      </span>
     </button>
-    <div
-        class="viewportImitator"
-        ref="viewportImitator"
-    >
-
-    </div>
   </div>
 </template>
 
 <script>
+  const defaultFloorPosition = {
+    fromTop: null,
+    current: null,
+    fromBottom: null,
+  };
+
   export default {
     data() {
       return {
         floors: [],
-        floorsField: null
+        floorsField: null,
+        floorsPosition: {
+            ...defaultFloorPosition
+        }
       };
     },
     mounted() {
@@ -33,7 +47,7 @@
 
       window.addEventListener('load', this.updateImitator);
       window.addEventListener('resize', this.updateImitator);
-      this.floorsField.addEventListener('scroll', this.updateImitator);
+      this.floorsField.addEventListener('scroll', this.updateNavigationState);
     },
     methods: {
       updateImitator() {
@@ -45,6 +59,35 @@
 
         viewportImitator.style.height = viewPortHeight / fullScroll * 100 + '%';
         viewportImitator.style.top = scrollPosition / fullScroll * 100 + '%';
+      },
+
+      updateNavigationState() {
+        const floors = document.querySelectorAll('.main .floor');
+
+        this.floorsPosition = {...defaultFloorPosition};
+        floors.forEach((el, i) => {
+          const r = el.getBoundingClientRect();
+          const wH =  window.innerHeight;
+          const lowerThanView = r.top > wH;
+          const higherThanView = r.bottom < 0;
+          const inView =  !lowerThanView && !higherThanView;
+          const topInView = r.top > 0 && r.top < wH;
+          const bottomInView = r.bottom > 0 && r.bottom < wH;
+          const isPrimary = r.top < wH/2 && r.bottom > wH/2;
+
+          if (isPrimary) {
+            this.floorsPosition.current = i;
+          }
+          //
+          else if (topInView) {
+            this.floorsPosition.fromBottom = i;
+          } else if (bottomInView) {
+            this.floorsPosition.fromTop = i;
+          }
+
+
+        });
+        console.info('   ');
       }
     },
     components: {},

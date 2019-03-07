@@ -4,7 +4,7 @@ import axios from 'axios';
 import _each from 'lodash/each';
 import _findIndex from 'lodash/findIndex';
 
-import {getEmployeesUrl} from './constants/api';
+import {employeesUrl} from './constants/api';
 
 import furniture from './__mocks/furniture';
 import {occupations} from './constants/app';
@@ -33,7 +33,8 @@ export const mutations = {
 };
 
 export const actions = {
-  getEmployees: 'getEmployees'
+  getEmployees: 'getEmployees',
+  getItems: 'getItems',
 };
 
 export default new Vuex.Store({
@@ -126,7 +127,23 @@ export default new Vuex.Store({
   actions: {
     [actions.getEmployees]({commit}) {
       axios
-        .get(getEmployeesUrl)
+        .get(employeesUrl)
+        .then((response) => {
+          const transformedResponse = response.data.map((empl) => ({
+            ...empl,
+            x: parseInt(empl.latitude, 10),
+            y: parseInt(empl.longitude, 10)
+          }));
+          commit(mutations.addEmpoyees, transformedResponse);
+        })
+        .catch((error => {
+          console.error(`error in ${actions.getEmployees} action:`, error)
+        }))
+    },
+
+      [actions.getItems]({commit}) {
+      axios
+        .get(employeesUrl)
         .then((response) => {
           const transformedResponse = response.data.map((empl) => ({
             ...empl,
