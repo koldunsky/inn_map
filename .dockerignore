@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+.git
+dist
+out
+README.md
+.editorconfig
+Jenkinsfile
