@@ -1,8 +1,6 @@
 <template>
   <div class="search"
        ref="root"
-       @mouseenter="onMouseEnter"
-       @mouseleave="onMouseLeave"
   >
     <vue-autosuggest
         :suggestions="filteredOptions"
@@ -32,7 +30,6 @@
     },
     data() {
       return {
-        isExpanded: false,
         selected: '',
         filteredOptions: [],
       };
@@ -40,6 +37,10 @@
     beforeUpdate(...rest) {
       console.info(rest);
     },
+    mounted() {
+      this.$refs.root.querySelector('input[type="text"]').focus();
+    },
+
     methods: {
       onBlur(e) {
         if (!e.target.value) {
@@ -84,19 +85,6 @@
       focusMe(e) {
         console.log(e)
       },
-
-      onMouseEnter(e) {
-        console.info('onMouseEnter');
-        this.$refs.root.querySelector('input[type="text"]').focus();
-      },
-
-      onMouseLeave(e) {
-        const input = this.$refs.root.querySelector('input[type="text"]');
-        if (!input.value) {
-          input.blur();
-        }
-        console.info('onMouseLeave');
-      }
     }
   };
 </script>

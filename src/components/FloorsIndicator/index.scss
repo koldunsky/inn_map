@@ -4,7 +4,7 @@ $between: 10px;
 
 .floorsIndicator {
   position: fixed;
-  left: $fixedElementsPadding;
+  right: $fixedElementsPadding;
   top: 0;
   bottom: 0;
   width: $navButtonSize;
@@ -32,12 +32,12 @@ $between: 10px;
 .floorIndicator::before {
   content: '';
   position: absolute;
-  width: calc(100% + 20px);
-  height: calc(100% + 20px);
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
   background: $innYellow;
   z-index: 0;
-  left: -$between;
-  right: -$between;
+  left: -$between *2;
+  right: -$between *2;
   bottom: -$between;
   top: -$between;
   margin: auto;
@@ -55,7 +55,7 @@ $between: 10px;
 }
 
 .floorIndicator_lowerActive::before {
-  transform: translateY(-75%);
+  transform: translateY(-65%);
   opacity: 1;
 }
 
@@ -69,7 +69,7 @@ $between: 10px;
 }
 
 .floorIndicator_higherActive::before {
-  transform: translateY(75%);
+  transform: translateY(65%);
   opacity: 1;
 }
 
