@@ -4,11 +4,11 @@ $between: 10px;
 
 .floorsIndicator {
   position: fixed;
-  left: 20px;
+  left: $fixedElementsPadding;
   top: 0;
   bottom: 0;
-  width: 50px;
-  z-index: 500;
+  width: $navButtonSize;
+  z-index: z(navigation);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,13 +18,14 @@ $between: 10px;
   position: relative;
   overflow: hidden;
   flex-grow: 0;
-  border: 1px solid slategrey;
+  border: 1px solid $innDarkBlue;
   cursor: pointer;
   font-size: 25px;
   user-select: none;
   outline: none;
-  border-radius: 50px;
-  height: 50px;
+  font-family: $fontFamily !important;
+  border-radius: $navButtonSize;
+  height: $navButtonSize;
   margin-bottom: 10px;
 }
 
@@ -41,7 +42,10 @@ $between: 10px;
   top: -$between;
   margin: auto;
   opacity: 0;
-  transition: .3s ease all;
+  //transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition-timing-function: ease;
+  transition-duration: .5s;
+  transition-property: all;
   border-radius:  50%;
 }
 

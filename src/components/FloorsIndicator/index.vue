@@ -1,8 +1,5 @@
 <template>
   <div class="floorsIndicator">
-    <pre style="color: cyan">
-
-    </pre>
     <button
         v-for="(floor, i) in floors"
         :key="i"
@@ -45,22 +42,12 @@
       this.floors = Array.prototype.slice.call(document.querySelectorAll('.floor'));
       this.floorsField = document.querySelector('.main .floors');
 
-      window.addEventListener('load', this.updateImitator);
-      window.addEventListener('resize', this.updateImitator);
+      window.addEventListener('load', this.updateNavigationState);
+      window.addEventListener('resize', this.updateNavigationState);
       this.floorsField.addEventListener('scroll', this.updateNavigationState);
+
     },
     methods: {
-      updateImitator() {
-        const { viewportImitator } = this.$refs;
-        const floorsField = document.querySelector('.main .floors');
-        const viewPortHeight = floorsField.getBoundingClientRect().height;
-        const fullScroll = floorsField.scrollHeight;
-        const scrollPosition = floorsField.scrollTop;
-
-        viewportImitator.style.height = viewPortHeight / fullScroll * 100 + '%';
-        viewportImitator.style.top = scrollPosition / fullScroll * 100 + '%';
-      },
-
       updateNavigationState() {
         const floors = document.querySelectorAll('.main .floor');
 
@@ -78,16 +65,14 @@
           if (isPrimary) {
             this.floorsPosition.current = i;
           }
-          //
+
           else if (topInView) {
             this.floorsPosition.fromBottom = i;
           } else if (bottomInView) {
             this.floorsPosition.fromTop = i;
           }
 
-
         });
-        console.info('   ');
       }
     },
     components: {},
