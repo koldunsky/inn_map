@@ -22,18 +22,13 @@ $pad: 20px;
   width: $navButtonSize;
   height: 100%;
   padding: $pad/2 $pad $pad/2 $pad*2;
-  border: 1px solid $innDarkBlue;
+  border: none;
+  box-shadow: 0 2px 10px -4px #000;
   outline: none;
   width: 300px;
   border-radius: 10px;
   transition: .3s ease;
   transition-property: border;
-
-
-  &:focus {
-    border-color: $innYellow;
-    border-width: 2px;
-  }
 }
 
 .search__suggestion-item {
@@ -57,8 +52,8 @@ $pad: 20px;
   top: 0;
   bottom: 0;
   margin: auto;
-}
-
-.search-input:focus ~ .search__icon {
-  right: -20px;
+  ::-webkit-input-placeholder {color: $innYellow;}
+  ::-moz-placeholder          {color: $innYellow;}/* Firefox 19+ */
+  :-moz-placeholder           {color: $innYellow;}/* Firefox 18- */
+  :-ms-input-placeholder      {color: $innYellow;}
 }

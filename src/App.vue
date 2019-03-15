@@ -12,6 +12,7 @@
     },
     created() {
       this.$store.dispatch(actions.getEmployees);
+      this.$store.dispatch(actions.getItems);
     },
   }
 </script>
