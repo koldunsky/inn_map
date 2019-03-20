@@ -9,7 +9,7 @@
         @click="clickHandler"
         @selected="onSelected"
         ref="autosuggest"
-        :input-props="{class: 'search-input', onInputChange: this.onInputChange, placeholder:'Enter employee name'}">
+        :input-props="{class: 'search-input', onInputChange: this.onInputChange, placeholder:'Поиск'}">
       <template slot-scope="{suggestion}">
         <span class="search__suggestion-item">{{suggestion.item.email}}</span>
       </template>
