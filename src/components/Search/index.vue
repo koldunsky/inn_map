@@ -56,6 +56,8 @@
         //   return false;
         // }
 
+        console.info(oldText);
+
         // Full customizability over filtering
         const filteredData = this.$store.state.employees.filter(empl => {
           console.info(empl);
@@ -75,6 +77,7 @@
 
       clickHandler(item) {
         // items are selected by default on click, but you can add some more behavior here!
+        console.info(item);
       },
 
       onSelected(item) {

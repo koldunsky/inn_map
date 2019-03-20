@@ -13,6 +13,7 @@ $fadedFadedBlack: lighten($fadedBlack, 50%);
   background: $fadedGrey;
   border: 3px solid $fadedGrey;
   border-radius: $borderRadius;
+  box-shadow: $boxShadow;
   padding: 10px;
 
   & > div {
