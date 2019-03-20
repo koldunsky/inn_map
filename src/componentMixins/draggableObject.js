@@ -1,7 +1,5 @@
 import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
-import {changeCoords} from '../constants/api';
 import {actions} from "../store";
-import axios from 'axios';
 
 export default {
     props: {
@@ -10,6 +8,10 @@ export default {
             default: null,
         },
         type: {
+            required: true,
+            type: String
+        },
+        subType: {
             required: true,
             type: String
         },
@@ -44,14 +46,6 @@ export default {
         this.$el.ondragstart = function () {
             return false;
         };
-
-        // if (__DEV__) {
-        //   console.info('puuuut');
-        //   axios.put(changeCoords(2), {
-        //       first_name: 'Руслан',
-        //       last_name: 'Колдунский'
-        //   })
-        // }
     },
     methods: {
         onMouseDown(e) {
@@ -85,8 +79,12 @@ export default {
                 });
             } else {
                 this.$store.dispatch(actions.updateItem, {
-                    id: this.id || 1,
-                    coords
+                    id: this.id || null,
+                    coords,
+                    type: this.type,
+                    extraData: {
+                        subType: this.subType
+                    }
                 });
             }
 
@@ -95,12 +93,14 @@ export default {
                 this.$store.commit(this.mapMethods.place, {
                     coords,
                     type: this.type,
+                    subType: this.subType,
                     id: this.id,
                 });
             } else {
                 this.$store.commit(this.mapMethods.move, {
                     coords,
                     id: this.id,
+                    type: this.type
                 });
             }
         },

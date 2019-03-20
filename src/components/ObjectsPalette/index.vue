@@ -21,9 +21,8 @@
       >
         <img :src="furni.image" class="bg">
         <Table
-            :image="furni.image"
-            :type="furni.type"
             :cloneOnMouseUp="true"
+            v-bind="furni"
         />
       </div>
     </div>

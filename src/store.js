@@ -2,23 +2,25 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import _each from 'lodash/each';
+import _get from 'lodash/get';
+import _find from 'lodash/find';
 import _findIndex from 'lodash/findIndex';
 
-import {changeCoords, employeesUrl, itemsUrl} from './constants/api';
+import {
+    changeEmployeeCoords,
+    changeItemCoords,
+    employeesUrl,
+    itemsUrl
+} from './constants/api';
 
-import furniture from './__mocks/furniture';
+import furniture, {assetsBySubType, nameByType} from './__mocks/furniture';
 import {occupations} from './constants/app';
 
 Vue.use(Vuex);
 
-const objectMap = {
-    table: furniture[0],
-    table_7: furniture[1],
-};
-
 export const mutations = {
     addEmpoyees: 'addEmpoyees',
-    additems: 'additems',
+    addItems: 'addItems',
     highlightOccupation: 'highlightOccupation',
 
     startDragObject: 'startDragObject',
@@ -49,12 +51,13 @@ export default new Vuex.Store({
         draggedObject: null,
         selectedEmployee: null,
         floors: [],
-        occupations,
+        occupations
     },
     mutations: {
         [mutations.addEmpoyees](state, employees) {
             employees = employees.map((empl) => ({
                 ...empl,
+                subType: 'human',
                 name: `${empl.person.first_name} ${empl.person.last_name}`,
                 type: 'employee',
                 isHighlited: false,
@@ -64,11 +67,25 @@ export default new Vuex.Store({
             }));
             state.employees = employees;
         },
-        [mutations.additems](state, items) {
-            items = items.map((tem) => ({
-            }));
-            state.items = items;
+
+        [mutations.addItems](state, items) {
+            items = items.map((item) => {
+                const subType = _get(item, 'extra_data.subType', 'table');
+                const obj = {
+                    ...item,
+                    type: item.item_type,
+                    id: item.id.toString(),
+                    image: assetsBySubType[subType],
+                    x: item.latitude,
+                    y: item.longitude,
+                    subType,
+                };
+
+                return obj;
+            });
+            state.placedObjects = items;
         },
+
         [mutations.highlightOccupation](state, name) {
             state.employees = state.employees.map((empl) => {
                 return {
@@ -110,13 +127,16 @@ export default new Vuex.Store({
             state.draggedObject = object;
         },
 
-        [mutations.addNewObjectToMap](state, {coords, type}) {
+        [mutations.addNewObjectToMap](state, item) {
             state.draggedObject = null;
+            const {coords, type, subType} = item;
             const obj = {
-                ...objectMap[type],
+                ..._find(furniture, {subType}),
                 ...coords,
-                id: `id_${Date.now()}`
+                id: `id_${Date.now()}`,
+                subType
             };
+            console.info('addNewObjectToMap', obj);
             state.placedObjects.push(obj);
         },
 
@@ -151,7 +171,7 @@ export default new Vuex.Store({
         },
 
         [actions.updateEmployee](context, {id, coords}) {
-            axios.put(changeCoords(id), {
+            axios.put(changeEmployeeCoords(id), {
                 floor: coords.floor,
                 longitude: coords.y,
                 latitude: coords.x
@@ -164,12 +184,18 @@ export default new Vuex.Store({
                 });
         },
 
-        [actions.updateItem](context, {id, coords}) {
-            axios.post(changeCoords(id, 'not_employee'), {
-                name: id,
+        [actions.updateItem](context, {id, coords, extraData, type = 'table'}) {
+            const isNewItem = id === null;
+            const method = isNewItem ? 'post' : 'put';
+            const url = isNewItem ? itemsUrl : changeItemCoords(id);
+
+            axios[method](url, {
+                name: nameByType[type],
                 floor: coords.floor,
                 longitude: coords.y,
-                latitude: coords.x
+                latitude: coords.x,
+                extra_data: extraData,
+                type
             })
                 .then(function (response) {
                     console.log(response);
@@ -183,7 +209,8 @@ export default new Vuex.Store({
             axios
                 .get(itemsUrl)
                 .then((response) => {
-                    console.info('[actions.getItems]', response);
+                    console.info('[actions.getItems]', response.data);
+                    commit(mutations.addItems, response.data);
                 })
                 .catch((error => {
                     console.error(`error in ${actions.getEmployees} action:`, error)
