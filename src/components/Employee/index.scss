@@ -3,17 +3,27 @@
 $duration: .3s;
 
 .employee {
-  border: 1px solid black;
+  //border: 1px solid black;
   border-radius: 50px;
   width: 20px;
   height: 20px;
-  background: $innViolet;
   transition: .2s ease;
   transition-property: box-shadow, background-color;
 
-  &:hover {
-    background: $innViolet;
-    box-shadow: 0 2px 3px inset rgba(black, .5);
+  &::after {
+    @include absoluteStretch;
+    content: '';
+    position: absolute;
+    transform: scale(.5);
+    background-color: rgba($black, .65);
+    border-radius: 50px;
+    transition: .3s ease ;
+    transition-property: transform, background-color;
+  }
+
+  &:hover::after {
+    background-color: $black;
+    transform: scale(1);
   }
 }
 

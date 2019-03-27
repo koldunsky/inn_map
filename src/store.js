@@ -10,13 +10,21 @@ import {
     changeEmployeeCoords,
     changeItemCoords,
     employeesUrl,
-    itemsUrl
+    itemsUrl,
+    restApiUrl
 } from './constants/api';
 
 import furniture, {assetsBySubType, nameByType} from './__mocks/furniture';
 import {occupations} from './constants/app';
 
 Vue.use(Vuex);
+
+axios.post(`${restApiUrl}login`, {
+    login: 'Ruslan.Koldunskiy',
+    password: 'Forgetmen0t'
+}, {withCredentials: true})
+    .then(console.warn)
+    .catch(console.error);
 
 export const mutations = {
     addEmpoyees: 'addEmpoyees',
@@ -39,7 +47,8 @@ export const actions = {
     getEmployees: 'getEmployees',
     getItems: 'getItems',
     updateEmployee: 'updateEmployee',
-    updateItem: 'updateItem'
+    updateItem: 'updateItem',
+    getUser: 'getUser'
 };
 
 export default new Vuex.Store({
@@ -129,7 +138,7 @@ export default new Vuex.Store({
 
         [mutations.addNewObjectToMap](state, item) {
             state.draggedObject = null;
-            const {coords, type, subType} = item;
+            const {coords, subType} = item;
             const obj = {
                 ..._find(furniture, {subType}),
                 ...coords,
@@ -152,6 +161,7 @@ export default new Vuex.Store({
             state.employees = moveExistingObject(state, payload, state.employees);
         },
     },
+
     actions: {
         [actions.getEmployees]({commit}) {
             axios
@@ -215,7 +225,11 @@ export default new Vuex.Store({
                 .catch((error => {
                     console.error(`error in ${actions.getEmployees} action:`, error)
                 }))
-        }
+        },
+
+        // [actions.getUser]({commit}) {
+        //     // Сюда будут приходить данные о юзере, если получаем 403, то
+        // }
     }
 })
 

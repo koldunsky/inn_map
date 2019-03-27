@@ -1,4 +1,4 @@
-const restApiUrl = 'https://townhall.test4game.com/api/';
+export const restApiUrl = 'https://townhall.test4game.com/api/';
 
 const paths = {
     employee: 'seat',
