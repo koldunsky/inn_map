@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "npx vue-cli-service serve",
     "qa": "vue-cli-service build",
     "live": "vue-cli-service build",
     "lint": "vue-cli-service lint"

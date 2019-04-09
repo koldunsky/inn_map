@@ -1,4 +1,6 @@
 export const restApiUrl = 'https://townhall.test4game.com/api/';
+export const accessUrl = `${restApiUrl}auth/token/obtain/`;
+export const refreshUrl = `${restApiUrl}auth/token/refresh/`;
 
 const paths = {
     employee: 'seat',

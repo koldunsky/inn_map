@@ -11,20 +11,15 @@ import {
     changeItemCoords,
     employeesUrl,
     itemsUrl,
-    restApiUrl
+    restApiUrl,
+    accessUrl,
+    requestUrl
 } from './constants/api';
 
 import furniture, {assetsBySubType, nameByType} from './__mocks/furniture';
 import {occupations} from './constants/app';
 
 Vue.use(Vuex);
-
-axios.post(`${restApiUrl}login`, {
-    login: 'Ruslan.Koldunskiy',
-    password: 'Forgetmen0t'
-}, {withCredentials: true})
-    .then(console.warn)
-    .catch(console.error);
 
 export const mutations = {
     addEmpoyees: 'addEmpoyees',
@@ -40,15 +35,21 @@ export const mutations = {
     moveExistingEmployee: 'moveExistingEmployee',
 
     setObjectToFind: 'setObjectToFind',
-    clearObjectToFind: 'clearObjectToFind'
+    clearObjectToFind: 'clearObjectToFind',
+
+    login: 'login'
 };
 
 export const actions = {
     getEmployees: 'getEmployees',
     getItems: 'getItems',
+
     updateEmployee: 'updateEmployee',
     updateItem: 'updateItem',
-    getUser: 'getUser'
+
+    getUser: 'getUser',
+
+    login: 'login'
 };
 
 export default new Vuex.Store({
@@ -58,9 +59,9 @@ export default new Vuex.Store({
         furniture,
         placedObjects: [],
         draggedObject: null,
-        selectedEmployee: null,
-        floors: [],
-        occupations
+        loggedInAs: null,
+        selectedEmployee: null, // !
+        occupations // !
     },
     mutations: {
         [mutations.addEmpoyees](state, employees) {
@@ -160,6 +161,10 @@ export default new Vuex.Store({
         [mutations.moveExistingEmployee](state, payload) {
             state.employees = moveExistingObject(state, payload, state.employees);
         },
+
+        [mutations.login](state, payload) {
+            state.loggedInAs = payload;
+        }
     },
 
     actions: {
@@ -226,6 +231,19 @@ export default new Vuex.Store({
                     console.error(`error in ${actions.getEmployees} action:`, error)
                 }))
         },
+
+        [actions.login]({commit}, {login, password}) {
+            axios.post(accessUrl, {
+                login,
+                password
+            }, {withCredentials: true})
+                .then((payload) => {
+                    console.info(payload);
+                    commit(mutations.login, payload.data);
+                })
+                .catch(console.error);
+
+        }
 
         // [actions.getUser]({commit}) {
         //     // Сюда будут приходить данные о юзере, если получаем 403, то
