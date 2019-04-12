@@ -44,7 +44,7 @@
     import ObjectsHolder from '../../components/ObjectsPalette';
     import FloorsIndicator from '../../components/FloorsIndicator';
     import Background from '../../components/Background';
-    import {mutations, actions} from '../../store';
+    import {mutations, actions} from '../../store/store';
 
     export default {
         components: {

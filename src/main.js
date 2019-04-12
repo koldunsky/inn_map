@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueAutosuggest from "vue-autosuggest";
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/store'
 
 import mouseCoordsToFloorCoords from './utils/js/mouseCoordsToFloorCoords.js';
 

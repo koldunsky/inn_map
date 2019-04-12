@@ -15,10 +15,10 @@ import {
     accessUrl,
     endpoint,
     accessUrlRelative
-} from './constants/api';
-
-import furniture, {assetsBySubType, nameByType} from './__mocks/furniture';
-import {occupations} from './constants/app';
+} from '../constants/api';
+import handleNetworkError from './handleNetworkError';
+import furniture, {assetsBySubType, nameByType} from '../__mocks/furniture';
+import {occupations} from '../constants/app';
 
 Vue.use(Vuex);
 
@@ -41,12 +41,49 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(localStorageMapping.accessToken)}`;
+// Add a request interceptor
+axiosInstance.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    return config;
+}, function (error) {
+    handleNetworkError(error);
+    // Do something with request error
+    return Promise.reject(error);
+});
+
+axiosInstance.interceptors.response.use(function (response) {
+    // Do something with response data
+    return response;
+}, function (error) {
+    handleNetworkError(error);
+    return Promise.reject(error);
+});
+
 
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     return JSON.parse(window.atob(base64));
 }
+
+const checkTokenIsActive = () => {
+    const a = localStorage.getItem(localStorageMapping.accessToken);
+    console.info(a);
+    const aParsed = !!a && a !== 'null' ? parseJwt(a) : null;
+    if (aParsed !== null) {
+        console.info(aParsed);
+        console.info(new Date(aParsed.exp  * 1000));
+    }
+
+    const r = localStorage.getItem(localStorageMapping.refreshToken);
+    const rParsed = !!r && r !== 'null' ? parseJwt(r) : null;
+    if (rParsed !== null) {
+        console.info(rParsed);
+        console.info(new Date(rParsed.exp  * 1000));
+    }
+}
+
+checkTokenIsActive();
 
 export const mutations = {
     addEmpoyees: 'addEmpoyees',
@@ -228,6 +265,14 @@ const store = new Vuex.Store({
         [mutations.addLoginError](state, payload) {
             state.loginError = payload;
         },
+
+        [mutations.startInit](state) {
+            state.initInProgress = true;
+        },
+
+        [mutations.endInit](state) {
+            state.initInProgress = false;
+        },
     },
 
     actions: {
@@ -235,19 +280,11 @@ const store = new Vuex.Store({
             Promise.all([
                 dispatch(actions.getEmployees),
                 dispatch(actions.getItems)
-            ]).then((successes) => {
-                console.info('successes', successes);
+            ]).then(() => {
+                commit(mutations.endInit);
             }).catch((errors) => {
-                commit(mutations.addLoginError, 'error');
                 console.info('errors', errors);
             });
-
-            // dispatch(actions.getEmployees).then((successes) => {
-            //     console.info('successes', successes);
-            // }).catch((errors) => {
-            //     commit(mutations.addLoginError, 'error');
-            //     console.info('errors', errors);
-            // });
         },
         [actions.getEmployees]({commit}) {
             return axiosInstance
@@ -323,8 +360,7 @@ const store = new Vuex.Store({
                     commit(mutations.updateAccessToken, payload.data.access);
                     commit(mutations.updateRefreshToken, payload.data.refresh);
                 })
-                .catch(console.error);
-
+                .catch(handleNetworkError);
         }
     }
 })

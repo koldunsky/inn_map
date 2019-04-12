@@ -20,7 +20,7 @@
 
 <script>
   import {VueAutosuggest} from 'vue-autosuggest';
-  import {mutations} from '../../store';
+  import {mutations} from '../../store/store';
   import SearchIcon from './assets/search.svg';
 
   export default {

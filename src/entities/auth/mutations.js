@@ -1,4 +1,4 @@
-import {mutations} from "../../store";
+import {mutations} from "../../store/store";
 
 export default {
     [mutations.updateLoggedInUser](state, payload) {
