@@ -11,13 +11,12 @@
             return {}
         },
         created() {
-            this.$store.dispatch(actions.login, {
-                login: 'Ruslan.Koldunskiy',
+            // this.$store.dispatch(actions.init);
+            this.$store.dispatch(actions.getAccessToken, {
+                username: 'Ruslan.Koldunskiy',
                 password: 'Forgetmen0t'
             }).then(() => {
-                console.info(this.$store.state.loggedInAs);
-                this.$store.dispatch(actions.getEmployees);
-                this.$store.dispatch(actions.getItems);
+                this.$store.dispatch(actions.init);
             });
         },
     }

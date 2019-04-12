@@ -12,10 +12,13 @@ Vue.config.productionTip = false;
 Vue.use(VueAutosuggest);
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+    router,
+    store,
+    render: (h) => h(App),
+    beforeCreate() {
+        this.$store.commit('initialiseStore');
+    }
+}).$mount('#app');
 
 
 document.addEventListener('mousemove', mouseCoordsToFloorCoords);

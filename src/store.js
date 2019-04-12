@@ -13,13 +13,40 @@ import {
     itemsUrl,
     restApiUrl,
     accessUrl,
-    requestUrl
+    endpoint,
+    accessUrlRelative
 } from './constants/api';
 
 import furniture, {assetsBySubType, nameByType} from './__mocks/furniture';
 import {occupations} from './constants/app';
 
 Vue.use(Vuex);
+
+const localStorageMapping = {
+    root: 'inn_map:',
+    get state() {
+        return `${this.root}state`
+    },
+    get refreshToken() {
+        return `${this.root}refreshToken`
+    },
+    get accessToken() {
+        return `${this.root}accessToken`
+    },
+};
+
+const axiosInstance = axios.create({
+    baseURL: restApiUrl,
+    timeout: 5000,
+});
+
+axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(localStorageMapping.accessToken)}`;
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+}
 
 export const mutations = {
     addEmpoyees: 'addEmpoyees',
@@ -37,10 +64,17 @@ export const mutations = {
     setObjectToFind: 'setObjectToFind',
     clearObjectToFind: 'clearObjectToFind',
 
-    login: 'login'
+    updateLoggedInUser: 'updateLoggedInUser',
+    addLoginError: 'addLoginError',
+    updateAccessToken: 'updateAccessToken',
+    updateRefreshToken: 'updateRefreshToken',
+
+    startInit: 'startInit',
+    endInit: 'endInit'
 };
 
 export const actions = {
+    init: 'init',
     getEmployees: 'getEmployees',
     getItems: 'getItems',
 
@@ -49,21 +83,38 @@ export const actions = {
 
     getUser: 'getUser',
 
-    login: 'login'
+    getAccessToken: 'getAccessToken'
 };
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
         objectToFind: null,
         employees: [],
         furniture,
         placedObjects: [],
         draggedObject: null,
+
         loggedInAs: null,
+        loginError: null,
+        accessToken: null,
+        refreshToken: null,
+
+        initInProgress: true,
+
+
         selectedEmployee: null, // !
         occupations // !
     },
     mutations: {
+        initialiseStore(state) {
+            // Check if the ID exists
+            if (localStorage.getItem(localStorageMapping.state)) {
+                // Replace the state object with the stored item
+                this.replaceState(
+                    Object.assign(state, JSON.parse(localStorage.getItem('inn_map_state')))
+                );
+            }
+        },
         [mutations.addEmpoyees](state, employees) {
             employees = employees.map((empl) => ({
                 ...empl,
@@ -162,15 +213,45 @@ export default new Vuex.Store({
             state.employees = moveExistingObject(state, payload, state.employees);
         },
 
-        [mutations.login](state, payload) {
+        [mutations.updateLoggedInUser](state, payload) {
             state.loggedInAs = payload;
-        }
+        },
+
+        [mutations.updateAccessToken](state, payload) {
+            state.accessToken = payload;
+        },
+
+        [mutations.updateRefreshToken](state, payload) {
+            state.refreshToken = payload;
+        },
+
+        [mutations.addLoginError](state, payload) {
+            state.loginError = payload;
+        },
     },
 
     actions: {
+        [actions.init]({dispatch, commit}) {
+            Promise.all([
+                dispatch(actions.getEmployees),
+                dispatch(actions.getItems)
+            ]).then((successes) => {
+                console.info('successes', successes);
+            }).catch((errors) => {
+                commit(mutations.addLoginError, 'error');
+                console.info('errors', errors);
+            });
+
+            // dispatch(actions.getEmployees).then((successes) => {
+            //     console.info('successes', successes);
+            // }).catch((errors) => {
+            //     commit(mutations.addLoginError, 'error');
+            //     console.info('errors', errors);
+            // });
+        },
         [actions.getEmployees]({commit}) {
-            axios
-                .get(employeesUrl)
+            return axiosInstance
+                .get(endpoint.employee)
                 .then((response) => {
                     const transformedResponse = response.data.map((empl) => ({
                         ...empl,
@@ -186,7 +267,7 @@ export default new Vuex.Store({
         },
 
         [actions.updateEmployee](context, {id, coords}) {
-            axios.put(changeEmployeeCoords(id), {
+            return axios.put(changeEmployeeCoords(id), {
                 floor: coords.floor,
                 longitude: coords.y,
                 latitude: coords.x
@@ -204,7 +285,7 @@ export default new Vuex.Store({
             const method = isNewItem ? 'post' : 'put';
             const url = isNewItem ? itemsUrl : changeItemCoords(id);
 
-            axios[method](url, {
+            return axios[method](url, {
                 name: nameByType[type],
                 floor: coords.floor,
                 longitude: coords.y,
@@ -221,8 +302,8 @@ export default new Vuex.Store({
         },
 
         [actions.getItems]({commit}) {
-            axios
-                .get(itemsUrl)
+            return axiosInstance
+                .get(endpoint.item)
                 .then((response) => {
                     console.info('[actions.getItems]', response.data);
                     commit(mutations.addItems, response.data);
@@ -232,28 +313,23 @@ export default new Vuex.Store({
                 }))
         },
 
-        [actions.login]({commit}, {login, password}) {
-            axios.post(accessUrl, {
-                login,
-                password
-            }, {withCredentials: true})
+        [actions.getAccessToken]({commit}, {username, password}) {
+            axiosInstance
+                .post(accessUrlRelative, {
+                    username,
+                    password
+                })
                 .then((payload) => {
-                    console.info(payload);
-                    commit(mutations.login, payload.data);
+                    commit(mutations.updateAccessToken, payload.data.access);
+                    commit(mutations.updateRefreshToken, payload.data.refresh);
                 })
                 .catch(console.error);
 
         }
-
-        // [actions.getUser]({commit}) {
-        //     // Сюда будут приходить данные о юзере, если получаем 403, то
-        // }
     }
 })
 
-
 function moveExistingObject(state, {coords, id}, objectsStore) {
-    console.info(coords);
     const i = _findIndex(objectsStore, {id});
     if (i === -1) {
         console.error(`не найден объект с id=${id}`, 'list:', objectsStore);
@@ -272,3 +348,11 @@ function moveExistingObject(state, {coords, id}, objectsStore) {
 
     return placedObjects;
 }
+
+store.subscribe((mutation, state) => {
+    localStorage.setItem(localStorageMapping.state, JSON.stringify(state));
+    localStorage.setItem(localStorageMapping.accessToken, state.accessToken);
+    localStorage.setItem(localStorageMapping.refreshToken, state.refreshToken);
+});
+
+export default store;
