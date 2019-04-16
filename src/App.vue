@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-    import {actions} from './store/store';
+    import {actions} from './store/index';
 
     export default {
         data() {
@@ -12,11 +12,11 @@
         },
         created() {
             this.$store.dispatch(actions.init);
-            // this.$store.dispatch(actions.getAccessToken, {
+            // this.$index.dispatch(actions.getAccessToken, {
             //     username: 'Ruslan.Koldunskiy',
             //     password: 'Forgetmen0t'
             // }).then(() => {
-            //     this.$store.dispatch(actions.init);
+            //     this.$index.dispatch(actions.init);
             // });
         },
     }

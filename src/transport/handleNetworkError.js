@@ -1,10 +1,10 @@
-import router from '../router';
+import router, {route} from '../router';
 import _get from 'lodash/get';
 
 export default ({message}) => {
     const errorMap = {
         'Request failed with status code 401': () => {
-            router.push('/auth');
+            router.push(route.auth);
         }
     };
 

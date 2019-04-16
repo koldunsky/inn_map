@@ -7,8 +7,8 @@
         <!--<input type="checkbox" v-model="showTile"> Схлопнуть домик-->
         <!--</label>-->
         <!--<pre style="position: fixed; text-align: left; background: rgba(0, 100, 100, .8); z-index: 500; color: white; padding: 20px">-->
-        <!--{{$store.state.placedObjects}}-->
-        <!--{{$store.state.employees}}-->
+        <!--{{$index.state.placedObjects}}-->
+        <!--{{$index.state.employees}}-->
         <!--</pre>-->
         <div class="floors" ref="floors">
             <div
@@ -44,7 +44,7 @@
     import ObjectsHolder from '../../components/ObjectsPalette';
     import FloorsIndicator from '../../components/FloorsIndicator';
     import Background from '../../components/Background';
-    import {mutations, actions} from '../../store/store';
+    import {mutations} from '../../store/index';
 
     export default {
         components: {

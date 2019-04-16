@@ -1,5 +1,5 @@
 import mouseCoordsToFloorCoords from '../utils/js/mouseCoordsToFloorCoords.js';
-import {actions} from "../store/store";
+import {actions} from "../store/index";
 
 export default {
     props: {

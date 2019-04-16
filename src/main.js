@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueAutosuggest from "vue-autosuggest";
 import App from './App.vue'
 import router from './router'
-import store from './store/store'
+import index from './store/index'
 
 import mouseCoordsToFloorCoords from './utils/js/mouseCoordsToFloorCoords.js';
 
@@ -13,7 +13,7 @@ Vue.use(VueAutosuggest);
 
 new Vue({
     router,
-    store,
+    store: index,
     render: (h) => h(App),
     beforeCreate() {
         this.$store.commit('initialiseStore');

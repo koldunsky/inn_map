@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {mutations} from '../../store/store';
+  import {mutations} from '../../store';
   import draggableObject from '../../componentMixins/draggableObject';
 
   export default {

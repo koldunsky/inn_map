@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
 import _each from 'lodash/each';
 import _get from 'lodash/get';
 import _find from 'lodash/find';
@@ -9,81 +8,14 @@ import _findIndex from 'lodash/findIndex';
 import {
     changeEmployeeCoords,
     changeItemCoords,
-    employeesUrl,
-    itemsUrl,
-    restApiUrl,
-    accessUrl,
-    endpoint,
-    accessUrlRelative
-} from '../constants/api';
-import handleNetworkError from './handleNetworkError';
+    endpoint
+} from '../transport/constants';
 import furniture, {assetsBySubType, nameByType} from '../__mocks/furniture';
 import {occupations} from '../constants/app';
+import fetch from '../transport';
+import localStorageMapping from './localstorageMapping';
 
 Vue.use(Vuex);
-
-const localStorageMapping = {
-    root: 'inn_map:',
-    get state() {
-        return `${this.root}state`
-    },
-    get refreshToken() {
-        return `${this.root}refreshToken`
-    },
-    get accessToken() {
-        return `${this.root}accessToken`
-    },
-};
-
-const axiosInstance = axios.create({
-    baseURL: restApiUrl,
-    timeout: 5000,
-});
-
-axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(localStorageMapping.accessToken)}`;
-// Add a request interceptor
-axiosInstance.interceptors.request.use(function (config) {
-    // Do something before request is sent
-    return config;
-}, function (error) {
-    handleNetworkError(error);
-    // Do something with request error
-    return Promise.reject(error);
-});
-
-axiosInstance.interceptors.response.use(function (response) {
-    // Do something with response data
-    return response;
-}, function (error) {
-    handleNetworkError(error);
-    return Promise.reject(error);
-});
-
-
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    return JSON.parse(window.atob(base64));
-}
-
-const checkTokenIsActive = () => {
-    const a = localStorage.getItem(localStorageMapping.accessToken);
-    console.info(a);
-    const aParsed = !!a && a !== 'null' ? parseJwt(a) : null;
-    if (aParsed !== null) {
-        console.info(aParsed);
-        console.info(new Date(aParsed.exp  * 1000));
-    }
-
-    const r = localStorage.getItem(localStorageMapping.refreshToken);
-    const rParsed = !!r && r !== 'null' ? parseJwt(r) : null;
-    if (rParsed !== null) {
-        console.info(rParsed);
-        console.info(new Date(rParsed.exp  * 1000));
-    }
-}
-
-checkTokenIsActive();
 
 export const mutations = {
     addEmpoyees: 'addEmpoyees',
@@ -148,7 +80,7 @@ const store = new Vuex.Store({
             if (localStorage.getItem(localStorageMapping.state)) {
                 // Replace the state object with the stored item
                 this.replaceState(
-                    Object.assign(state, JSON.parse(localStorage.getItem('inn_map_state')))
+                    Object.assign(state, JSON.parse(localStorage.getItem(localStorageMapping.state)))
                 );
             }
         },
@@ -287,7 +219,7 @@ const store = new Vuex.Store({
             });
         },
         [actions.getEmployees]({commit}) {
-            return axiosInstance
+            return fetch
                 .get(endpoint.employee)
                 .then((response) => {
                     const transformedResponse = response.data.map((empl) => ({
@@ -304,7 +236,7 @@ const store = new Vuex.Store({
         },
 
         [actions.updateEmployee](context, {id, coords}) {
-            return axios.put(changeEmployeeCoords(id), {
+            return fetch.put(changeEmployeeCoords(id), {
                 floor: coords.floor,
                 longitude: coords.y,
                 latitude: coords.x
@@ -320,9 +252,9 @@ const store = new Vuex.Store({
         [actions.updateItem](context, {id, coords, extraData, type = 'table'}) {
             const isNewItem = id === null;
             const method = isNewItem ? 'post' : 'put';
-            const url = isNewItem ? itemsUrl : changeItemCoords(id);
+            const url = isNewItem ? endpoint.item : changeItemCoords(id);
 
-            return axios[method](url, {
+            return fetch[method](url, {
                 name: nameByType[type],
                 floor: coords.floor,
                 longitude: coords.y,
@@ -339,7 +271,7 @@ const store = new Vuex.Store({
         },
 
         [actions.getItems]({commit}) {
-            return axiosInstance
+            return fetch
                 .get(endpoint.item)
                 .then((response) => {
                     console.info('[actions.getItems]', response.data);
@@ -351,8 +283,8 @@ const store = new Vuex.Store({
         },
 
         [actions.getAccessToken]({commit}, {username, password}) {
-            axiosInstance
-                .post(accessUrlRelative, {
+            fetch
+                .post(endpoint.access, {
                     username,
                     password
                 })
@@ -360,7 +292,7 @@ const store = new Vuex.Store({
                     commit(mutations.updateAccessToken, payload.data.access);
                     commit(mutations.updateRefreshToken, payload.data.refresh);
                 })
-                .catch(handleNetworkError);
+                .catch(console.error);
         }
     }
 })

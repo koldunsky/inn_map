@@ -5,17 +5,22 @@ import Auth from './views/Auth/index.vue';
 
 Vue.use(Router);
 
+export const route = {
+    root: '/',
+    auth: '/auth'
+};
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: route.root,
       name: 'main',
       component: Main
     },
     {
-      path: '/auth',
+      path: route.auth,
       name: 'auth',
       component: Auth
     }
