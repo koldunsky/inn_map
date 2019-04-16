@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {root} from './constants';
+import {root, endpoint} from './constants';
 import _memoize from 'lodash/memoize';
 import localStorageMapping from '../store/localstorageMapping';
 import handleNetworkError from './handleNetworkError';
@@ -60,6 +60,10 @@ axiosInstance.interceptors.request.use(function (config) {
 axiosInstance.interceptors.response.use(function (response) {
     // Do something with response data
     console.info('after receive', response);
+    const {status, request: {responseURL}} = response;
+    if (status === 200 && responseURL.includes(endpoint.access)) {
+        router.push(route.root);
+    }
     return response;
 }, function (error) {
     handleNetworkError(error);
