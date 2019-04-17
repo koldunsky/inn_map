@@ -12,7 +12,7 @@ import {
 } from '../transport/constants';
 import furniture, {assetsBySubType, nameByType} from '../__mocks/furniture';
 import {occupations} from '../constants/app';
-import fetch from '../transport';
+import fetch, {updateTokens} from '../transport';
 import localStorageMapping from './localstorageMapping';
 
 Vue.use(Vuex);
@@ -65,8 +65,8 @@ const store = new Vuex.Store({
 
         loggedInAs: null,
         loginError: null,
-        accessToken: null,
-        refreshToken: null,
+        accessToken: '',
+        refreshToken: '',
 
         initInProgress: true,
 
@@ -186,14 +186,6 @@ const store = new Vuex.Store({
             state.loggedInAs = payload;
         },
 
-        [mutations.updateAccessToken](state, payload) {
-            state.accessToken = payload;
-        },
-
-        [mutations.updateRefreshToken](state, payload) {
-            state.refreshToken = payload;
-        },
-
         [mutations.addLoginError](state, payload) {
             state.loginError = payload;
         },
@@ -282,15 +274,14 @@ const store = new Vuex.Store({
                 }))
         },
 
-        [actions.getAccessToken]({commit}, {username, password}) {
+        [actions.getAccessToken](context, {username, password}) {
             fetch
                 .post(endpoint.access, {
                     username,
                     password
                 })
-                .then((payload) => {
-                    commit(mutations.updateAccessToken, payload.data.access);
-                    commit(mutations.updateRefreshToken, payload.data.refresh);
+                .then(({data}) => {
+                    updateTokens(data);
                 })
                 .catch(console.error);
         }
@@ -319,8 +310,6 @@ function moveExistingObject(state, {coords, id}, objectsStore) {
 
 store.subscribe((mutation, state) => {
     localStorage.setItem(localStorageMapping.state, JSON.stringify(state));
-    localStorage.setItem(localStorageMapping.accessToken, state.accessToken);
-    localStorage.setItem(localStorageMapping.refreshToken, state.refreshToken);
 });
 
 export default store;

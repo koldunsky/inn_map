@@ -1,11 +1,11 @@
 node {
-  def project = "intranet"
+  def project = "townhall"
   def env_name = "qa"
   def docker_registry = "${DOCKER_REGISTRY}"
   def s3_bucket = "s3://${project}_${env_name}"
   def branch = "${BRANCH_NAME}"
   def feature_name = (branch =~ /^feature-/) ? branch.substring(8) : "master"
-  def s3_location = "${s3_bucket}/${project}/${feature_name}/"
+  def s3_location = "${s3_bucket}/${project}/map/${feature_name}/"
   def container_name = "${project}_${env_name}"
 
   checkout scm

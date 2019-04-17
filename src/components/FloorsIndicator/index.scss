@@ -15,6 +15,7 @@ $between: 10px;
 }
 
 .floorIndicator {
+  flex: 0 0 auto;
   position: relative;
   overflow: hidden;
   flex-grow: 0;
@@ -31,7 +32,7 @@ $between: 10px;
   margin-bottom: 10px;
 }
 
-.floorIndicator::before {
+.floorIndicatorYolk {
   content: '';
   position: absolute;
   width: calc(100% + 40px);
@@ -49,28 +50,29 @@ $between: 10px;
   transition-duration: .5s;
   transition-property: all;
   border-radius:  50%;
+  pointer-events: none;
 }
 
 
-.floorIndicator_lower::before {
+.floorIndicator_lower .floorIndicatorYolk {
   transform: translateY(-100%);
 }
 
-.floorIndicator_lowerActive::before {
+.floorIndicator_lowerActive .floorIndicatorYolk {
   transform: translateY(-65%);
   opacity: 1;
 }
 
-.floorIndicator_active::before {
+.floorIndicator_active .floorIndicatorYolk {
   opacity: 1;
   transform: translateY(0);
 }
 
-.floorIndicator_higher::before {
+.floorIndicator_higher .floorIndicatorYolk {
   transform: translateY(100%);
 }
 
-.floorIndicator_higherActive::before {
+.floorIndicator_higherActive .floorIndicatorYolk {
   transform: translateY(65%);
   opacity: 1;
 }

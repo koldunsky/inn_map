@@ -14,6 +14,9 @@
         @click="() => {floor.scrollIntoView({block: 'center', behavior: 'smooth'})}"
         :style="{'flexGrow': floor.innerHeight}"
     >
+      <span class="floorIndicatorYolk">
+
+      </span>
       <span class="floorIndicatorText">
       {{floors.length - i}}
       </span>
@@ -35,7 +38,8 @@
         floorsField: null,
         floorsPosition: {
             ...defaultFloorPosition
-        }
+        },
+        horizontalPosition: null
       };
     },
     mounted() {
@@ -55,9 +59,6 @@
         floors.forEach((el, i) => {
           const r = el.getBoundingClientRect();
           const wH =  window.innerHeight;
-          const lowerThanView = r.top > wH;
-          const higherThanView = r.bottom < 0;
-          const inView =  !lowerThanView && !higherThanView;
           const topInView = r.top > 0 && r.top < wH;
           const bottomInView = r.bottom > 0 && r.bottom < wH;
           const isPrimary = r.top < wH/2 && r.bottom > wH/2;
@@ -71,7 +72,8 @@
           } else if (bottomInView) {
             this.floorsPosition.fromTop = i;
           }
-
+          this.horizontalPosition = this.floorsField.getBoundingClientRect().width - window.outerWidth;
+          console.info(this.horizontalPosition);
         });
       }
     },

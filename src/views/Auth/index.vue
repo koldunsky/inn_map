@@ -1,6 +1,6 @@
 <template>
   <div class="COMPONENT_NAME">
-      <form @submit.prevent="login" action="">
+      <form @submit.prevent="login" action="" autocomplete="on">
           <input v-model="username" autocomplete="on" type="text">
           <input v-model="password" autocomplete="on" type="text">
           <button>Логинъ</button>
